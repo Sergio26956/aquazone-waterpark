@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['your-image-domain.com']
-  }
+    domains: ['your-domain.com'], // Cambiar si usas imágenes externas
+  },
 }
 
 module.exports = nextConfig
