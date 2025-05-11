@@ -1,15 +1,6 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "next.config.js",
-      "use": "@vercel/next"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
+  "rewrites": [
+    { "source": "/admin", "destination": "/app/admin/page.tsx" },
+    { "source": "/contacto", "destination": "/app/contacto/page.tsx" }
   ]
 }
