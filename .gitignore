@@ -1,8 +1,6 @@
 node_modules
 .next
-out
 .env
 .DS_Store
-.vscode
+out
 dist
-*.log
