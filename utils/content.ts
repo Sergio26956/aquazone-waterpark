@@ -8,7 +8,7 @@ export const sections = {
     text: `Somos líderes en parques acuáticos inflables en España. Conoce nuestras atracciones y reserva tu experiencia única.`
   },
   contact: {
-    email: 'info@aquazone.com',
-    phone: '+34 600 000 000',
+    email: 'alquevaproducciones@hotmail.com',
+    phone: '+34649002658',
   },
 }
