@@ -1,16 +1,23 @@
-"use client"
-import { motion } from "framer-motion"
-import Link from "next/link"
+"use client";
 
-export default function GlowingButton({ text, href }: { text: string; href: string }) {
+import { motion } from "framer-motion";
+import React from "react";
+
+type GlowingButtonProps = {
+  label: string;
+  onClick?: () => void;
+};
+
+export default function GlowingButton({ label, onClick }: GlowingButtonProps) {
   return (
-    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-      <Link href={href}>
-        <a className="relative inline-block px-6 py-3 text-white font-semibold bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition duration-300">
-          <span className="absolute top-0 left-0 w-full h-full rounded-full bg-blue-400 blur-xl opacity-50 animate-pulse -z-10" />
-          {text}
-        </a>
-      </Link>
-    </motion.div>
-  )
+    <motion.button
+      onClick={onClick}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="relative px-6 py-3 text-white font-semibold bg-blue-600 rounded-2xl overflow-hidden shadow-lg border-none cursor-pointer transition-all"
+    >
+      <span className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-20 animate-pulse rounded-2xl blur-sm"></span>
+      <span className="relative z-10">{label}</span>
+    </motion.button>
+  );
 }
