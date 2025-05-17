@@ -1,25 +1,13 @@
-"use client";
-
-import { useState } from "react";
-
-export default function Contact() {
-  const [status, setStatus] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("Enviado correctamente");
-  };
-
+export default function Contacto() {
   return (
-    <div id="contacto" className="max-w-xl mx-auto">
-      <h3 className="text-xl font-bold mb-4">Contáctanos</h3>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input type="text" placeholder="Nombre" className="w-full border px-4 py-2" required />
-        <input type="email" placeholder="Correo" className="w-full border px-4 py-2" required />
-        <textarea placeholder="Mensaje" className="w-full border px-4 py-2" rows={4} required />
-        <button type="submit" className="bg-blue-600 text-white px-6 py-2">Enviar</button>
+    <section className="p-6 bg-white mt-8 rounded shadow">
+      <h2 className="text-3xl font-bold mb-4">Contacto</h2>
+      <form className="grid gap-4 max-w-md">
+        <input type="text" placeholder="Nombre" className="border p-2 rounded" required />
+        <input type="email" placeholder="Correo electrónico" className="border p-2 rounded" required />
+        <textarea placeholder="Mensaje" className="border p-2 rounded h-32" required />
+        <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded">Enviar</button>
       </form>
-      {status && <p className="mt-4 text-green-600">{status}</p>}
-    </div>
+    </section>
   );
 }
