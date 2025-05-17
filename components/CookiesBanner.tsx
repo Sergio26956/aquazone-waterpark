@@ -1,26 +1,27 @@
 "use client";
-
 import { useState, useEffect } from "react";
 
 export default function CookiesBanner() {
-  const [accepted, setAccepted] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("cookiesAccepted");
-    if (!saved) setAccepted(false);
+    const accepted = localStorage.getItem("cookiesAccepted");
+    if (!accepted) setVisible(true);
   }, []);
 
-  const handleAccept = () => {
+  const acceptCookies = () => {
     localStorage.setItem("cookiesAccepted", "true");
-    setAccepted(true);
+    setVisible(false);
   };
 
-  if (accepted) return null;
+  if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 w-full bg-gray-800 text-white p-4 text-sm flex justify-between items-center">
-      <span>Este sitio usa cookies para mejorar la experiencia.</span>
-      <button onClick={handleAccept} className="bg-blue-600 px-3 py-1 rounded">Aceptar</button>
+    <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 text-center z-50">
+      Usamos cookies para mejorar la experiencia.{" "}
+      <button onClick={acceptCookies} className="ml-4 bg-blue-600 px-4 py-2 rounded text-white">
+        Aceptar
+      </button>
     </div>
   );
 }
