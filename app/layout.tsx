@@ -1,25 +1,27 @@
-import "./globals.css"
-import { ReactNode } from "react"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
-import FloatingCallButton from "@/components/FloatingCallButton"
-import ScrollToTop from "@/components/ScrollToTop"
+import "./globals.css";
+import { Inter } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "AQUAZONE Water Park",
-  description: "Parques acuáticos flotantes y terrestres",
-}
+  description: "Parques acuáticos modulares y móviles por Alqueva Producciones",
+};
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="es">
-      <body className="relative">
-        <Header />
-        <main>{children}</main>
+      <body className={inter.className}>
+        <Navbar />
+        {children}
         <Footer />
-        <FloatingCallButton />
-        <ScrollToTop />
       </body>
     </html>
-  )
+  );
 }
