@@ -4,27 +4,28 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 const navItems = [
-  { href: "/", label: "Inicio" },
-  { href: "/piscinas", label: "Piscinas" },
-  { href: "/playas", label: "Playas" },
-  { href: "/kamikaze", label: "Kamikaze Jump" },
-  { href: "/urbano", label: "Parque Urbano" },
+  { name: "Inicio", href: "/" },
+  { name: "Parques Acuáticos", href: "#categorias" },
+  { name: "Galería", href: "/galeria" },
+  { name: "Contacto", href: "/contacto" },
 ]
 
 export default function MainNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="flex gap-6">
+    <nav className="flex space-x-6">
       {navItems.map((item) => (
         <Link
-          key={item.href}
+          key={item.name}
           href={item.href}
-          className={`text-sm font-medium transition-colors hover:text-primary ${
-            pathname === item.href ? "text-primary" : "text-muted-foreground"
+          className={`text-sm font-medium transition-colors ${
+            pathname === item.href
+              ? "text-primary"
+              : "text-muted-foreground hover:text-primary"
           }`}
         >
-          {item.label}
+          {item.name}
         </Link>
       ))}
     </nav>
