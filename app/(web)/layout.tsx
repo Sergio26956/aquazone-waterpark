@@ -1,23 +1,11 @@
-import "@/styles/globals.css"
-import { Inter } from "next/font/google"
-import { cn } from "@/lib/utils"
+import "../globals.css"
+import type { ReactNode } from "react"
 
-const inter = Inter({ subsets: ["latin"] })
-
-export const metadata = {
-  title: "AQUAZONE Water Park",
-  description: "Parques acuáticos flotantes y terrestres - diversión asegurada",
-}
-
-export default function WebLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function WebLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
-      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.className)}>
-        {children}
+      <body className="bg-white text-black">
+        <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
       </body>
     </html>
   )
