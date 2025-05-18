@@ -1,6 +1,8 @@
 import { AdminCalendar } from "./calendar"
 import { AdminUsers } from "./users"
 import { AdminStats } from "./stats"
+import { AdminMessages } from "./messages"
+import { AdminSettings } from "./settings"
 
 export function AdminHome() {
   return (
@@ -12,6 +14,8 @@ export function AdminHome() {
         <AdminStats />
         <AdminCalendar />
         <AdminUsers />
+        <AdminMessages />
+        <AdminSettings />
       </div>
     </section>
   )
