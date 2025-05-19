@@ -1,12 +1,9 @@
-import dynamic from 'next/dynamic';
-
-const Calendario = dynamic(() => import('@/components/ui/Calendario'), { ssr: false });
+import CalendarioFechas from '@/components/admin/CalendarioFechas';
 
 export default function CalendarioPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">Calendario de Actividades</h1>
-      <Calendario />
-    </div>
+    <main className="p-6 bg-gray-50 min-h-screen">
+      <CalendarioFechas />
+    </main>
   );
 }
