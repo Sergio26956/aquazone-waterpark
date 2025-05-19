@@ -1,10 +1,10 @@
-export default function DashboardPage() {
+import Estadisticas from '@/components/admin/Estadisticas';
+
+export default function AdminDashboard() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-4">Bienvenido al Panel Administrativo</h1>
-      <p className="text-lg text-gray-600">
-        Aquí puedes gestionar todo lo relacionado con AQUAZONE Water Park.
-      </p>
-    </div>
+    <main className="p-6 space-y-6 bg-gray-50 min-h-screen">
+      <h1 className="text-3xl font-bold text-blue-600">Panel de Control</h1>
+      <Estadisticas />
+    </main>
   );
 }
