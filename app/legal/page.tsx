@@ -1,18 +1,16 @@
-export default function LegalPage() {
+export default function LegalNoticePage() {
   return (
-    <div className="p-8 max-w-4xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold">Política de Privacidad & Cookies</h1>
+    <div className="max-w-4xl mx-auto px-4 py-16 text-sm leading-relaxed">
+      <h1 className="text-2xl font-bold mb-6">Aviso Legal</h1>
       <p>
-        AQUAZONE no recopila datos sin consentimiento. Usamos cookies para mejorar la experiencia del usuario.
+        Este sitio web es propiedad de AQUAZONE WATER PARK. El uso del sitio implica la aceptación de las siguientes condiciones:
       </p>
-      <h2 className="text-xl font-semibold">Cookies</h2>
-      <p>
-        Esta web usa cookies funcionales y analíticas. Al continuar navegando, aceptas su uso.
-      </p>
-      <h2 className="text-xl font-semibold">Protección de datos</h2>
-      <p>
-        Tus datos están protegidos según la Ley Orgánica de Protección de Datos española. Puedes ejercer tus derechos en info@aquazone.com
-      </p>
+      <ul className="list-disc list-inside my-4">
+        <li>Todos los contenidos son propiedad intelectual de la empresa.</li>
+        <li>No se permite la reproducción sin consentimiento.</li>
+        <li>Los datos personales se tratan conforme a la legislación vigente.</li>
+      </ul>
+      <p>Para cualquier duda, contacta con nosotros mediante el formulario de contacto.</p>
     </div>
-  )
+  );
 }
