@@ -1,7 +1,4 @@
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return children
+export const metadata = {
+  title: 'AQUAZONE Water Park',
+  description: 'Parques acuáticos flotantes y móviles espectaculares para todas las edades.',
 }
