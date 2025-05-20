@@ -1,17 +1,11 @@
-import Hero from "@/components/Hero";
-import MediaGallery from "@/components/MediaGallery";
-import SectionParques from "@/components/SectionParques";
-import Contacto from "@/components/Contacto";
-import CookiesBanner from "@/components/CookiesBanner";
+import Hero from "./components/Hero";
+import CategoryGrid from "./components/CategoryGrid";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-300">
+    <main className="min-h-screen bg-black">
       <Hero />
-      <SectionParques />
-      <MediaGallery />
-      <Contacto />
-      <CookiesBanner />
+      <CategoryGrid />
     </main>
   );
 }
