@@ -1,51 +1,39 @@
-'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { validarCredenciales } from '@/lib/auth';
+"use client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const router = useRouter();
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validarCredenciales(email, password)) {
-      document.cookie = `sessionToken=authenticated; path=/`;
-      router.push('/admin');
+  const login = () => {
+    if (user === "admin" && pass === "1234") {
+      router.push("/admin/dashboard");
     } else {
-      alert('Credenciales incorrectas');
+      alert("Credenciales incorrectas");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-50">
-      <form onSubmit={handleLogin} className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Acceso Admin</h2>
+    <div className="min-h-screen flex items-center justify-center bg-blue-900">
+      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
+        <h2 className="text-xl font-bold mb-4 text-center">Acceso Administrativo</h2>
         <input
-          type="email"
-          placeholder="Correo"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 mb-4 border rounded"
-          required
+          className="w-full p-2 mb-3 border rounded"
+          placeholder="Usuario"
+          onChange={(e) => setUser(e.target.value)}
         />
         <input
           type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           className="w-full p-2 mb-4 border rounded"
-          required
+          placeholder="Contraseña"
+          onChange={(e) => setPass(e.target.value)}
         />
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-        >
-          Ingresar
+        <button onClick={login} className="w-full bg-blue-800 text-white py-2 rounded">
+          Entrar
         </button>
-      </form>
+      </div>
     </div>
   );
 }
