@@ -1,15 +1,18 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
 export function middleware(request: NextRequest) {
-  const session = request.cookies.get('sessionToken')?.value;
+  const isAuthenticated = true // Cambiar a lógica real de autenticación
 
-  if (!session && request.nextUrl.pathname.startsWith('/admin')) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  const adminPath = request.nextUrl.pathname.startsWith("/admin")
+
+  if (adminPath && !isAuthenticated) {
+    return NextResponse.redirect(new URL("/login", request.url))
   }
 
-  return NextResponse.next();
+  return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
-};
+  matcher: ["/admin/:path*"],
+}
