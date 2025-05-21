@@ -1,10 +1,16 @@
-import AdminLayout from '@/components/admin/AdminLayout';
+import { AdminSidebar } from "@/components/admin/sidebar"
+import { AdminNavbar } from "@/components/admin/navbar"
 
-export default function AdminDashboardPage() {
+const AdminPageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <AdminLayout>
-      <h2 className="text-2xl font-bold mb-4">Bienvenido al Panel de Administración</h2>
-      <p className="text-gray-700">Desde aquí puedes gestionar toda la plataforma de Aquazone.</p>
-    </AdminLayout>
-  );
+    <div className="flex min-h-screen">
+      <AdminSidebar />
+      <div className="flex-1">
+        <AdminNavbar />
+        <main className="p-4">{children}</main>
+      </div>
+    </div>
+  )
 }
+
+export default AdminPageLayout
