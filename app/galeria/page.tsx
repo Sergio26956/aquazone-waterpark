@@ -1,16 +1,27 @@
-import Gallery from '@/components/Gallery'
-import { Metadata } from 'next'
+const imagenes = [
+  "/img1.jpg",
+  "/img2.jpg",
+  "/img3.jpg",
+  "/img4.jpg",
+  "/img5.jpg",
+]
 
-export const metadata: Metadata = {
-  title: 'Galería - AQUAZONE',
-  description: 'Fotos y vídeos de parques acuáticos',
-}
-
-export default function GaleriaPage() {
+const Galeria = () => {
   return (
-    <main className="min-h-screen bg-white pt-20">
-      <h1 className="text-center text-3xl font-bold mb-8">Galería Multimedia</h1>
-      <Gallery />
-    </main>
+    <div className="min-h-screen bg-white p-6 md:p-12">
+      <h1 className="text-3xl font-bold mb-6 text-center">Galería de Imágenes</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {imagenes.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={`imagen ${i + 1}`}
+            className="rounded shadow hover:scale-105 transition-transform"
+          />
+        ))}
+      </div>
+    </div>
   )
 }
+
+export default Galeria
