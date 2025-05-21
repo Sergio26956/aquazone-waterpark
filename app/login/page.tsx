@@ -1,39 +1,28 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+"use client"
 
-export default function LoginPage() {
-  const router = useRouter();
-  const [user, setUser] = useState("");
-  const [pass, setPass] = useState("");
+import { useRouter } from "next/navigation"
 
-  const login = () => {
-    if (user === "admin" && pass === "1234") {
-      router.push("/admin/dashboard");
-    } else {
-      alert("Credenciales incorrectas");
-    }
-  };
+const LoginPage = () => {
+  const router = useRouter()
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Simular login, luego redirigir al panel
+    router.push("/admin/dashboard")
+  }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-900">
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
-        <h2 className="text-xl font-bold mb-4 text-center">Acceso Administrativo</h2>
-        <input
-          className="w-full p-2 mb-3 border rounded"
-          placeholder="Usuario"
-          onChange={(e) => setUser(e.target.value)}
-        />
-        <input
-          type="password"
-          className="w-full p-2 mb-4 border rounded"
-          placeholder="Contraseña"
-          onChange={(e) => setPass(e.target.value)}
-        />
-        <button onClick={login} className="w-full bg-blue-800 text-white py-2 rounded">
+    <div className="min-h-screen flex items-center justify-center">
+      <form onSubmit={handleLogin} className="space-y-4 bg-white p-6 rounded shadow-md w-full max-w-sm">
+        <h2 className="text-2xl font-bold">Iniciar Sesión</h2>
+        <input type="text" placeholder="Usuario" className="w-full p-2 border rounded" required />
+        <input type="password" placeholder="Contraseña" className="w-full p-2 border rounded" required />
+        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
           Entrar
         </button>
-      </div>
+      </form>
     </div>
-  );
+  )
 }
+
+export default LoginPage
