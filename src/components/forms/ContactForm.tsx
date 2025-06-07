@@ -2,52 +2,41 @@
 import { useState } from 'react';
 
 export default function ContactForm() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setFormData({ name: '', email: '', message: '' });
+    setStatus('Enviando...');
+
+    // Simulación de envío
+    setTimeout(() => {
+      setStatus('Mensaje enviado correctamente');
+    }, 1000);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 bg-white rounded shadow space-y-4">
-      <h2 className="text-xl font-semibold">Contacto</h2>
+    <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded">
       <input
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
+        type="text"
+        placeholder="Nombre"
+        className="w-full border p-2 rounded"
         required
-        placeholder="Tu nombre"
-        className="w-full p-2 border border-gray-300 rounded"
       />
       <input
-        name="email"
         type="email"
-        value={formData.email}
-        onChange={handleChange}
+        placeholder="Correo electrónico"
+        className="w-full border p-2 rounded"
         required
-        placeholder="Tu email"
-        className="w-full p-2 border border-gray-300 rounded"
       />
       <textarea
-        name="message"
-        value={formData.message}
-        onChange={handleChange}
+        placeholder="Mensaje"
+        className="w-full border p-2 rounded"
         required
-        placeholder="Tu mensaje"
-        className="w-full p-2 border border-gray-300 rounded"
-        rows={4}
       />
-      <button type="submit" className="w-full bg-green-600 text-white py-2 rounded">
+      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
         Enviar
       </button>
-      {submitted && <p className="text-green-600">Mensaje enviado correctamente.</p>}
+      {status && <p className="text-sm text-green-600">{status}</p>}
     </form>
   );
 }
