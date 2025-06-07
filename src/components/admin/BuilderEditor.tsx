@@ -1,10 +1,21 @@
+'use client';
+
 import React from 'react';
+import dynamic from 'next/dynamic';
+
+const Builder = dynamic(() => import('react-email-editor'), { ssr: false });
 
 const BuilderEditor = () => {
+  const exportHtml = () => {
+    alert('Exportación de HTML simulada');
+  };
+
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
-      <h2 className="text-xl font-bold mb-2">Editor Visual (Drag & Drop)</h2>
-      <p className="text-gray-600">[Simulación] Arrastra y suelta para construir contenido.</p>
+    <div className="p-6">
+      <Builder />
+      <button onClick={exportHtml} className="mt-4 px-4 py-2 bg-blue-600 text-white">
+        Exportar HTML
+      </button>
     </div>
   );
 };
