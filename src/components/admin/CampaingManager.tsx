@@ -1,12 +1,26 @@
-import React from 'react';
+'use client';
 
-const CampaingManager = () => {
+import React, { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+
+const CampaignManager = () => {
+  const [campaignName, setCampaignName] = useState('');
+
+  const handleCreate = () => {
+    alert(`Campaña "${campaignName}" creada (simulado)`);
+  };
+
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
-      <h2 className="text-xl font-bold mb-2">Gestor de Campañas</h2>
-      <p className="text-gray-600">Aquí podrás lanzar campañas de mailing y publicidad.</p>
+    <div className="p-6 space-y-4">
+      <Input
+        placeholder="Nombre de la campaña"
+        value={campaignName}
+        onChange={(e) => setCampaignName(e.target.value)}
+      />
+      <Button onClick={handleCreate}>Crear Campaña</Button>
     </div>
   );
 };
 
-export default CampaingManager;
+export default CampaignManager;
