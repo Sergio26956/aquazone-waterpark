@@ -1,26 +1,31 @@
 'use client';
+import { useState } from 'react';
 
-import React, { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-
-const CampaignManager = () => {
+export default function CampaingManager() {
   const [campaignName, setCampaignName] = useState('');
+  const [status, setStatus] = useState('');
 
-  const handleCreate = () => {
-    alert(`Campaña "${campaignName}" creada (simulado)`);
+  const handleLaunch = () => {
+    setStatus(`Campaña "${campaignName}" lanzada correctamente`);
   };
 
   return (
-    <div className="p-6 space-y-4">
-      <Input
+    <div className="p-6">
+      <h2 className="text-2xl font-bold mb-4">Gestor de Campañas</h2>
+      <input
+        type="text"
         placeholder="Nombre de la campaña"
         value={campaignName}
         onChange={(e) => setCampaignName(e.target.value)}
+        className="p-2 border rounded w-full mb-4"
       />
-      <Button onClick={handleCreate}>Crear Campaña</Button>
+      <button
+        onClick={handleLaunch}
+        className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+      >
+        Lanzar Campaña
+      </button>
+      {status && <p className="mt-4 text-green-700">{status}</p>}
     </div>
   );
-};
-
-export default CampaignManager;
+}
