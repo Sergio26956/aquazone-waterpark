@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+'use client';
+import { useState } from 'react';
 
-const AIContentGenerator = () => {
+export default function AIContentGenerator() {
   const [prompt, setPrompt] = useState('');
-  const [result, setResult] = useState('');
+  const [generated, setGenerated] = useState('');
 
-  const handleGenerate = async () => {
-    // Simulación de generación con IA
-    setResult(`Resultado generado para: ${prompt}`);
+  const generateContent = () => {
+    setGenerated(`Texto generado a partir del prompt: "${prompt}"`);
   };
 
   return (
-    <div className="p-4 rounded-lg bg-white shadow-md">
-      <h2 className="text-xl font-bold mb-2">Generador de Contenido con IA</h2>
+    <div className="p-6">
+      <h2 className="text-2xl font-bold mb-4">Generador de Contenido con IA</h2>
       <textarea
-        className="w-full p-2 border rounded"
-        rows={3}
-        placeholder="Escribe tu idea aquí..."
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
+        className="w-full h-32 p-2 border rounded"
+        placeholder="Introduce tu prompt para generar contenido..."
       />
       <button
-        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        onClick={handleGenerate}
+        onClick={generateContent}
+        className="mt-4 bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700"
       >
         Generar
       </button>
-      {result && <p className="mt-4 bg-gray-100 p-2 rounded">{result}</p>}
+      {generated && <p className="mt-4 bg-gray-100 p-4 rounded">{generated}</p>}
     </div>
   );
-};
-
-export default AIContentGenerator;
+}
