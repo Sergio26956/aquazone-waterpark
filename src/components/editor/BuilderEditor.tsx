@@ -1,37 +1,34 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 
 const BuilderEditor = () => {
-  const [components, setComponents] = useState<string[]>([]);
+  const [title, setTitle] = useState('');
+  const [html, setHtml] = useState('');
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const newComponent = e.dataTransfer.getData('component');
-    setComponents((prev) => [...prev, newComponent]);
-  };
-
-  const allowDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
+  const handleGenerate = () => {
+    alert('Componente generado (simulado)');
   };
 
   return (
-    <div className="p-4 bg-gray-50 rounded-xl border border-gray-300">
-      <h3 className="text-xl font-bold mb-2">Editor Visual</h3>
-      <div
-        onDrop={handleDrop}
-        onDragOver={allowDrop}
-        className="min-h-[300px] border border-dashed border-gray-500 p-4 bg-white"
-      >
-        {components.map((comp, index) => (
-          <div key={index} className="p-2 bg-blue-100 rounded my-2">
-            {comp}
-          </div>
-        ))}
-        {components.length === 0 && (
-          <p className="text-gray-400">Arrastra y suelta componentes aquí...</p>
-        )}
-      </div>
+    <div className="p-4 border rounded-xl bg-white shadow-md">
+      <h3 className="text-xl font-semibold mb-2">Constructor Visual Web</h3>
+      <Input
+        placeholder="Título del componente"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="mb-2"
+      />
+      <Textarea
+        placeholder="Contenido HTML"
+        value={html}
+        onChange={(e) => setHtml(e.target.value)}
+        className="mb-2"
+      />
+      <Button onClick={handleGenerate}>Generar Componente</Button>
     </div>
   );
 };
