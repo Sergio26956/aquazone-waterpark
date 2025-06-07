@@ -1,34 +1,28 @@
 'use client';
+import { useState } from 'react';
 
-import React, { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-
-const ContentEditor = () => {
-  const [title, setTitle] = useState('');
+export default function ContentEditor() {
   const [content, setContent] = useState('');
 
   const handleSave = () => {
-    alert('Contenido guardado (simulado)');
+    alert('Contenido guardado: ' + content);
   };
 
   return (
-    <div className="p-6 space-y-4">
-      <Input
-        placeholder="Título del contenido"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <Textarea
-        placeholder="Contenido principal"
+    <div className="p-6">
+      <h2 className="text-2xl font-bold mb-4">Editor de Contenido</h2>
+      <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        className="h-60"
+        className="w-full h-64 p-4 border rounded"
+        placeholder="Edita el contenido..."
       />
-      <Button onClick={handleSave}>Guardar</Button>
+      <button
+        onClick={handleSave}
+        className="mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+      >
+        Guardar
+      </button>
     </div>
   );
-};
-
-export default ContentEditor;
+}
