@@ -1,12 +1,21 @@
-import React from 'react';
+'use client';
 
-const UserManager = () => {
+const users = [
+  { name: 'Usuario 1', email: 'user1@example.com' },
+  { name: 'Usuario 2', email: 'user2@example.com' },
+];
+
+export default function UserManager() {
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
-      <h2 className="text-xl font-bold mb-2">Gestión de Usuarios</h2>
-      <p className="text-gray-600">[Simulación] Aquí podrás ver y gestionar los usuarios registrados.</p>
+    <div>
+      <h3 className="text-xl font-bold mb-4">Gestión de Usuarios</h3>
+      <ul className="space-y-2">
+        {users.map((user, i) => (
+          <li key={i} className="bg-gray-100 p-2 rounded shadow">
+            {user.name} - {user.email}
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
-
-export default UserManager;
+}
