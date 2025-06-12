@@ -1,13 +1,14 @@
 'use client';
-import React from 'react';
-
-export default function VideoPlayer({ src }: { src: string }) {
+export default function VideoPlayer({ url }: { url: string }) {
   return (
-    <div className="w-full h-auto rounded-md overflow-hidden shadow">
-      <video controls className="w-full h-full">
-        <source src={src} type="video/mp4" />
-        Tu navegador no soporta la etiqueta de video.
-      </video>
+    <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg">
+      <iframe
+        src={url}
+        className="absolute top-0 left-0 w-full h-full"
+        frameBorder="0"
+        allow="autoplay; fullscreen"
+        allowFullScreen
+      />
     </div>
   );
 }
