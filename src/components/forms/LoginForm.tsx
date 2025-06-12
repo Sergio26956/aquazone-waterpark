@@ -1,35 +1,48 @@
 'use client';
 import { useState } from 'react';
 
-export default function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function ContactForm() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Intentando iniciar sesión con: ${email}`);
+    console.log('Mensaje enviado:', form);
   };
 
   return (
-    <form onSubmit={handleLogin} className="space-y-4 p-4 border rounded">
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-4">
+      <input
+        type="text"
+        name="name"
+        placeholder="Tu nombre"
+        className="w-full border px-4 py-2 rounded"
+        onChange={handleChange}
+        required
+      />
       <input
         type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Correo electrónico"
-        className="w-full border p-2 rounded"
+        name="email"
+        placeholder="Tu correo"
+        className="w-full border px-4 py-2 rounded"
+        onChange={handleChange}
         required
       />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Contraseña"
-        className="w-full border p-2 rounded"
+      <textarea
+        name="message"
+        placeholder="Escribe tu mensaje..."
+        rows={4}
+        className="w-full border px-4 py-2 rounded"
+        onChange={handleChange}
         required
       />
-      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-        Iniciar sesión
+      <button
+        type="submit"
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+      >
+        Enviar
       </button>
     </form>
   );
