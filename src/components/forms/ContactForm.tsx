@@ -2,20 +2,48 @@
 import { useState } from 'react';
 
 export default function ContactForm() {
-  const [status, setStatus] = useState('');
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('Mensaje enviado correctamente.');
+    console.log('Mensaje enviado:', form);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 space-y-4 max-w-xl mx-auto">
-      <input type="text" placeholder="Nombre" required className="w-full p-2 border rounded" />
-      <input type="email" placeholder="Email" required className="w-full p-2 border rounded" />
-      <textarea placeholder="Mensaje" required className="w-full p-2 border rounded" />
-      <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">Enviar</button>
-      {status && <p className="text-green-600">{status}</p>}
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-4">
+      <input
+        type="text"
+        name="name"
+        placeholder="Tu nombre"
+        className="w-full border px-4 py-2 rounded"
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Tu correo"
+        className="w-full border px-4 py-2 rounded"
+        onChange={handleChange}
+        required
+      />
+      <textarea
+        name="message"
+        placeholder="Escribe tu mensaje..."
+        rows={4}
+        className="w-full border px-4 py-2 rounded"
+        onChange={handleChange}
+        required
+      />
+      <button
+        type="submit"
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+      >
+        Enviar
+      </button>
     </form>
   );
 }
