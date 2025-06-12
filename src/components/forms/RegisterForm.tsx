@@ -2,42 +2,46 @@
 import { useState } from 'react';
 
 export default function RegisterForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Registrando a: ${name}`);
+    console.log('Registro enviado:', form);
   };
 
   return (
-    <form onSubmit={handleRegister} className="space-y-4 p-4 border rounded">
+    <form onSubmit={handleSubmit} className="max-w-sm mx-auto p-6 bg-white shadow-md rounded-xl space-y-4">
       <input
         type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        name="name"
         placeholder="Nombre completo"
-        className="w-full border p-2 rounded"
+        className="w-full border px-4 py-2 rounded"
+        onChange={handleChange}
         required
       />
       <input
         type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        name="email"
         placeholder="Correo electrónico"
-        className="w-full border p-2 rounded"
+        className="w-full border px-4 py-2 rounded"
+        onChange={handleChange}
         required
       />
       <input
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        name="password"
         placeholder="Contraseña"
-        className="w-full border p-2 rounded"
+        className="w-full border px-4 py-2 rounded"
+        onChange={handleChange}
         required
       />
-      <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
+      <button
+        type="submit"
+        className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+      >
         Registrarse
       </button>
     </form>
