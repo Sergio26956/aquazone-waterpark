@@ -1,8 +1,10 @@
 'use client';
-import React from 'react';
+import { ReactNode } from 'react';
 
-export default function GradientBackground() {
+export default function GradientBackground({ children }: { children: ReactNode }) {
   return (
-    <div className="fixed inset-0 -z-10 bg-gradient-to-br from-sky-100 to-blue-300"></div>
+    <div className="relative bg-gradient-to-br from-blue-100 via-white to-blue-50 min-h-screen">
+      {children}
+    </div>
   );
 }
