@@ -1,33 +1,32 @@
-import React, { useState } from 'react';
+'use client';
+import { useRef, useState } from 'react';
 
-const MediaUploader = () => {
-  const [files, setFiles] = useState<FileList | null>(null);
+export default function MediaUploader() {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [files, setFiles] = useState<File[]>([]);
 
-  const handleUpload = () => {
-    if (files) {
-      Array.from(files).forEach((file) => {
-        console.log('Archivo cargado:', file.name);
-      });
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFiles(Array.from(e.target.files));
     }
   };
 
   return (
-    <div className="p-4 rounded-lg bg-white shadow-md">
-      <h2 className="text-xl font-bold mb-2">Subidor de Medios</h2>
+    <div>
+      <h3 className="text-xl font-bold mb-4">Subir Medios</h3>
       <input
         type="file"
+        accept="image/*,video/*"
         multiple
-        onChange={(e) => setFiles(e.target.files)}
+        ref={inputRef}
+        onChange={handleUpload}
         className="mb-2"
       />
-      <button
-        className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-        onClick={handleUpload}
-      >
-        Subir
-      </button>
+      <ul>
+        {files.map((file, i) => (
+          <li key={i}>{file.name}</li>
+        ))}
+      </ul>
     </div>
   );
-};
-
-export default MediaUploader;
+}
