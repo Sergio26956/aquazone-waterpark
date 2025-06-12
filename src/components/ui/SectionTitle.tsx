@@ -1,9 +1,8 @@
 'use client';
-
-export default function SectionTitle({ title }: { title: string }) {
+export default function SectionTitle({ text }: { text: string }) {
   return (
-    <h2 className="text-3xl font-bold text-center text-primary mb-6">
-      {title}
+    <h2 className="text-3xl md:text-4xl font-extrabold text-center text-blue-700 my-10">
+      {text}
     </h2>
   );
 }
