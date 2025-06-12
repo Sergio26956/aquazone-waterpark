@@ -1,45 +1,30 @@
 'use client';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
-export default function JobApplicationForm() {
-  const [data, setData] = useState({ name: '', email: '', cv: '' });
+interface ModalProps {
+  trigger: ReactNode;
+  children: ReactNode;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert('Solicitud enviada correctamente');
-  };
+export default function Modal({ trigger, children }: ModalProps) {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 bg-white rounded shadow space-y-4">
-      <h2 className="text-xl font-semibold">Aplicación de Empleo</h2>
-      <input
-        name="name"
-        required
-        placeholder="Tu nombre"
-        value={data.name}
-        onChange={(e) => setData({ ...data, name: e.target.value })}
-        className="w-full p-2 border border-gray-300 rounded"
-      />
-      <input
-        name="email"
-        type="email"
-        required
-        placeholder="Tu correo"
-        value={data.email}
-        onChange={(e) => setData({ ...data, email: e.target.value })}
-        className="w-full p-2 border border-gray-300 rounded"
-      />
-      <input
-        name="cv"
-        required
-        placeholder="Enlace a tu CV"
-        value={data.cv}
-        onChange={(e) => setData({ ...data, cv: e.target.value })}
-        className="w-full p-2 border border-gray-300 rounded"
-      />
-      <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded">
-        Enviar Solicitud
-      </button>
-    </form>
+    <>
+      <div onClick={() => setIsOpen(true)}>{trigger}</div>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="bg-white p-6 rounded-xl shadow-lg max-w-lg w-full relative">
+            <button
+              className="absolute top-3 right-3 text-gray-500 hover:text-black"
+              onClick={() => setIsOpen(false)}
+            >
+              ✕
+            </button>
+            {children}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
