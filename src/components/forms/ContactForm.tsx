@@ -1,49 +1,26 @@
-'use client';
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function ContactForm() {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sent, setSent] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Mensaje enviado:', form);
+    console.log("Formulario enviado:", form);
+    setSent(true);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-4">
-      <input
-        type="text"
-        name="name"
-        placeholder="Tu nombre"
-        className="w-full border px-4 py-2 rounded"
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Tu correo"
-        className="w-full border px-4 py-2 rounded"
-        onChange={handleChange}
-        required
-      />
-      <textarea
-        name="message"
-        placeholder="Escribe tu mensaje..."
-        rows={4}
-        className="w-full border px-4 py-2 rounded"
-        onChange={handleChange}
-        required
-      />
-      <button
-        type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-      >
-        Enviar
-      </button>
+    <form onSubmit={handleSubmit} className="space-y-4 bg-white p-4 rounded shadow">
+      <input type="text" name="name" placeholder="Nombre" value={form.name} onChange={handleChange} className="w-full border p-2 rounded" />
+      <input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} className="w-full border p-2 rounded" />
+      <textarea name="message" placeholder="Mensaje" value={form.message} onChange={handleChange} className="w-full border p-2 rounded" />
+      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Enviar</button>
+      {sent && <p className="text-green-600">Mensaje enviado correctamente.</p>}
     </form>
   );
 }
