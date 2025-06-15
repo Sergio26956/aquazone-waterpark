@@ -1,15 +1,10 @@
-'use client';
-import { Bell } from 'lucide-react';
+import { Bell } from "lucide-react";
 
-export default function NotificationBell({ count = 0 }: { count?: number }) {
+export default function NotificationBell() {
   return (
-    <div className="relative">
+    <button className="relative">
       <Bell className="w-6 h-6 text-gray-600" />
-      {count > 0 && (
-        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 rounded-full">
-          {count}
-        </span>
-      )}
-    </div>
+      <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full animate-ping" />
+    </button>
   );
 }
