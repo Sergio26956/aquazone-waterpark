@@ -1,29 +1,26 @@
-'use client';
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function NewsletterForm() {
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    console.log("Suscripción:", email);
+    setSubscribed(true);
   };
 
   return (
-    <form onSubmit={handleSubscribe} className="space-y-2 p-4 bg-gray-100 rounded">
+    <form onSubmit={handleSubmit} className="flex gap-2">
       <input
         type="email"
+        placeholder="Tu email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Tu correo electrónico"
-        className="w-full border p-2 rounded"
-        required
+        className="p-2 border rounded w-full"
       />
-      <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded">
-        Suscribirse
-      </button>
-      {submitted && <p className="text-green-600 text-sm">¡Gracias por suscribirte!</p>}
+      <button type="submit" className="bg-green-600 text-white px-4 rounded">Suscribirme</button>
+      {subscribed && <span className="text-sm text-green-700 ml-2">¡Gracias por suscribirte!</span>}
     </form>
   );
 }
