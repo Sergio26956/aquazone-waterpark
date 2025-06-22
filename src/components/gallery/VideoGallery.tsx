@@ -1,22 +1,11 @@
-const videos = [
-  'https://www.youtube.com/embed/dQw4w9WgXcQ',
-  'https://www.youtube.com/embed/3JZ_D3ELwOQ',
-];
-
-export default function VideoGallery() {
+export default function VideoGallery({ videos }: { videos: string[] }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
-      {videos.map((src, index) => (
-        <iframe
-          key={index}
-          width="100%"
-          height="315"
-          src={src}
-          title={`Video ${index}`}
-          frameBorder="0"
-          allowFullScreen
-          className="rounded shadow"
-        />
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {videos.map((src, i) => (
+        <video key={i} controls className="w-full rounded-lg">
+          <source src={src} type="video/mp4" />
+          Tu navegador no soporta video HTML5.
+        </video>
       ))}
     </div>
   );
