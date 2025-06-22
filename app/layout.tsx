@@ -1,29 +1,24 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
 import { Metadata } from 'next'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { FloatingCallButton } from '@/components/FloatingCallButton'
+import { SocialBar } from '@/components/SocialBar'
 
 export const metadata: Metadata = {
   title: 'AQUAZONE Water Park',
-  description: 'Parques acuáticos flotantes y móviles espectaculares para todas las edades.',
-  icons: {
-    icon: '/favicon.ico',
-  },
+  description: 'Parques acuáticos hinchables - Flotantes y Terrestres',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-      </head>
-      <body className={inter.className}>
-        <Navbar />
-        {children}
+      <body className="min-h-screen bg-white text-black font-sans">
+        <Header />
+        <main className="relative z-10">{children}</main>
+        <SocialBar />
         <Footer />
+        <FloatingCallButton />
       </body>
     </html>
   )
