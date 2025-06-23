@@ -1,4 +1,3 @@
-// components/HeroSection.tsx
 'use client'
 
 export const HeroSection = () => (
