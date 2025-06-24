@@ -1,6 +1,8 @@
-{
-  "rewrites": [
-    { "source": "/admin", "destination": "/app/admin/page.tsx" },
-    { "source": "/contacto", "destination": "/app/contacto/page.tsx" }
-  ]
-}
+node_modules
+.next
+out
+dist
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
