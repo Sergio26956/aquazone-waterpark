@@ -1,27 +1,28 @@
 "use client";
-
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
 
-interface ParallaxSectionProps {
-  backgroundImage: string;
-  children: React.ReactNode;
+interface Props {
+  image: string;
+  overlayText: string;
 }
 
-export default function ParallaxSection({ backgroundImage, children }: ParallaxSectionProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+export default function ParallaxSection({ image, overlayText }: Props) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   return (
-    <section ref={ref} className="relative h-screen overflow-hidden">
+    <div ref={ref} className="relative h-[70vh] overflow-hidden">
       <motion.div
-        style={{ backgroundImage: `url(${backgroundImage})`, y }}
         className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${image})`, y }}
       />
-      <div className="relative z-10 flex h-full items-center justify-center bg-black/30 text-white">
-        {children}
+      <div className="relative z-10 h-full flex items-center justify-center">
+        <h2 className="text-white text-4xl md:text-6xl font-bold backdrop-blur-sm bg-black/30 px-6 py-4 rounded-xl">
+          {overlayText}
+        </h2>
       </div>
-    </section>
+    </div>
   );
 }
