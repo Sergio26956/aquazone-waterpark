@@ -1,17 +1,10 @@
-# AQUAZONE Water Park Website
+# AQUAZONE Water Park Web
 
-Sitio oficial del parque acuático AQUAZONE. Incluye diseño adaptativo, animaciones, administración y contenidos multimedia impactantes.
+Sitio web completo y visualmente impresionante para parques acuáticos terrestres y flotantes, desarrollado con Next.js, TailwindCSS y animaciones Framer Motion.  
 
-## Scripts
+Diseñado para ser:
+- Ultra visual e impactante  
+- Adaptable y editable sin conocimientos técnicos  
+- Integrado con IA, redes sociales y herramientas de contenido automático  
 
-- `npm run dev`: Desarrollo
-- `npm run build`: Compilar producción
-- `npm run start`: Iniciar servidor
-
-## Estructura
-
-- `app/`: páginas
-- `components/`: bloques reutilizables
-- `public/`: medios (imágenes, videos)
-- `styles/`: CSS
-- `utils/`: utilidades como el envío de correos
+### Proyecto en desarrollo 100% personalizado.
