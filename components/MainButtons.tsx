@@ -1,24 +1,81 @@
 'use client'
+import { motion } from 'framer-motion'
+import Image from 'next/image'
+import { useEffect, useRef } from 'react'
 
-import { useRouter } from 'next/navigation'
+export default function Home() {
+  const scrollRef = useRef<HTMLDivElement>(null)
 
-export const MainButtons = () => {
-  const router = useRouter()
+  useEffect(() => {
+    const style = document.createElement('style')
+    style.innerHTML = `
+      @keyframes floatLogo {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+
+      @media screen and (max-width: 768px) {
+        .main-title {
+          font-size: 2rem;
+        }
+        .logo-img {
+          width: 120px !important;
+        }
+      }
+    `
+    document.head.appendChild(style)
+  }, [])
+
+  const handleScroll = () => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
-    <div className="flex flex-col md:flex-row justify-center gap-6 my-10 px-4">
-      <button
-        className="bg-blue-600 text-white py-4 px-8 rounded-lg text-xl font-semibold hover:bg-blue-700 transition"
-        onClick={() => router.push('/flotantes')}
+    <main className="relative w-full h-screen overflow-hidden">
+      {/* Fondo animado */}
+      <video
+        autoPlay
+        loop
+        muted
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        src="/videos/fondo.mp4"
+      />
+
+      {/* Logo flotante */}
+      <motion.div
+        className="absolute top-12 left-1/2 transform -translate-x-1/2 z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, -10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
       >
-        Parques Acuáticos Flotantes
-      </button>
-      <button
-        className="bg-green-600 text-white py-4 px-8 rounded-lg text-xl font-semibold hover:bg-green-700 transition"
-        onClick={() => router.push('/terrestres')}
-      >
-        Parques Acuáticos Terrestres
-      </button>
-    </div>
+        <Image
+          src="/imagenes/logo.jpg"
+          alt="Logo AQUAZONE"
+          width={200}
+          height={200}
+          className="logo-img rounded-full shadow-xl"
+        />
+      </motion.div>
+
+      {/* Botón bajar */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+        <button
+          onClick={handleScroll}
+          className="bg-white/70 hover:bg-white/90 text-black font-bold py-2 px-4 rounded-full shadow-md transition-all"
+        >
+          ↓ Explorar AQUAZONE
+        </button>
+      </div>
+
+      {/* Sección inferior de introducción */}
+      <div ref={scrollRef} className="relative z-20 w-full h-[80vh] bg-white flex flex-col items-center justify-center text-center px-6">
+        <h2 className="text-3xl md:text-5xl font-bold text-blue-900 mb-4">
+          Bienvenido a AQUAZONE
+        </h2>
+        <p className="text-gray-700 text-lg max-w-xl">
+          Vive la experiencia acuática más impresionante de Europa. Parques flotantes y terrestres para todas las edades. Descubre nuestras atracciones espectaculares.
+        </p>
+      </div>
+    </main>
   )
 }
