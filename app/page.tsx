@@ -1,86 +1,81 @@
 'use client'
-
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
+import { useEffect, useRef } from 'react'
 
-export default function HomePage() {
+export default function Home() {
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const style = document.createElement('style')
+    style.innerHTML = `
+      @keyframes floatLogo {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+
+      @media screen and (max-width: 768px) {
+        .main-title {
+          font-size: 2rem;
+        }
+        .logo-img {
+          width: 120px !important;
+        }
+      }
+    `
+    document.head.appendChild(style)
+  }, [])
+
+  const handleScroll = () => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <div className="relative w-full h-screen overflow-hidden">
+    <main className="relative w-full h-screen overflow-hidden">
       {/* Fondo animado */}
-      <motion.div
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 15, ease: 'easeOut' }}
-        className="absolute inset-0 z-0"
-      >
-        <Image
-          src="/images/fondo-aquazone.jpg"
-          alt="Fondo AQUAZONE"
-          layout="fill"
-          objectFit="cover"
-          quality={100}
-          priority
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm" />
-      </motion.div>
+      <video
+        autoPlay
+        loop
+        muted
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        src="/videos/fondo.mp4"
+      />
 
-      {/* Logo flotante animado */}
+      {/* Logo flotante */}
       <motion.div
-        className="absolute top-6 left-1/2 transform -translate-x-1/2 z-10"
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1.2, delay: 0.3 }}
+        className="absolute top-12 left-1/2 transform -translate-x-1/2 z-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, -10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
       >
         <Image
           src="/imagenes/logo.jpg"
           alt="Logo AQUAZONE"
-          width={240}
-          height={120}
-          className="animate-pulse drop-shadow-xl"
+          width={200}
+          height={200}
+          className="logo-img rounded-full shadow-xl"
         />
       </motion.div>
 
-      {/* Contenido central */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4">
-        <motion.h1
-          className="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2 }}
+      {/* Botón bajar */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+        <button
+          onClick={handleScroll}
+          className="bg-white/70 hover:bg-white/90 text-black font-bold py-2 px-4 rounded-full shadow-md transition-all"
         >
-          Bienvenido a AQUAZONE Water Park
-        </motion.h1>
-        <motion.p
-          className="text-lg md:text-xl max-w-2xl drop-shadow-md"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.4 }}
-        >
-          Vive la experiencia más espectacular en parques acuáticos móviles y flotantes.
-        </motion.p>
-
-        <motion.div
-          className="mt-8 flex gap-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.6 }}
-        >
-          <Link
-            href="/terrestres"
-            className="bg-white text-black px-6 py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transition"
-          >
-            Parques Terrestres
-          </Link>
-          <Link
-            href="/flotantes"
-            className="bg-white text-black px-6 py-3 rounded-xl font-semibold shadow-lg hover:scale-105 transition"
-          >
-            Parques Flotantes
-          </Link>
-        </motion.div>
+          ↓ Explorar AQUAZONE
+        </button>
       </div>
-    </div>
+
+      {/* Sección inferior de introducción */}
+      <div ref={scrollRef} className="relative z-20 w-full h-[80vh] bg-white flex flex-col items-center justify-center text-center px-6">
+        <h2 className="text-3xl md:text-5xl font-bold text-blue-900 mb-4">
+          Bienvenido a AQUAZONE
+        </h2>
+        <p className="text-gray-700 text-lg max-w-xl">
+          Vive la experiencia acuática más impresionante de Europa. Parques flotantes y terrestres para todas las edades. Descubre nuestras atracciones espectaculares.
+        </p>
+      </div>
+    </main>
   )
 }
