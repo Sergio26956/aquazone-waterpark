@@ -2,28 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+/* Efecto flotante + reflejo suave para logo */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.02);
+    filter: brightness(1.15);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Mejoras generales opcionales */
 body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Inter', sans-serif;
   background-color: #000;
+  font-family: 'Arial', sans-serif;
   color: #fff;
-  scroll-behavior: smooth;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-button,
-input,
-textarea,
-select {
-  font-family: inherit;
+  overflow-x: hidden;
 }
