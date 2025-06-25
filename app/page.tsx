@@ -1,13 +1,14 @@
-'use client'
+import React from 'react'
+import HeroSection from '@/components/HeroSection'
+import MainButtons from '@/components/MainButtons'
+import AnimatedLogo from '@/components/AnimatedLogo'
 
-import { HeroSection } from '@/components/HeroSection'
-import { MainButtons } from '@/components/MainButtons'
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="w-full overflow-hidden">
+    <main className="relative min-h-screen bg-black text-white overflow-hidden">
+      <AnimatedLogo />
       <HeroSection />
       <MainButtons />
-    </div>
+    </main>
   )
 }
