@@ -1,46 +1,44 @@
 'use client'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Sparkles } from 'lucide-react'
+import { FaWater, FaShip, FaSwimmer } from 'react-icons/fa'
+
+const buttons = [
+  {
+    label: 'Parques Flotantes',
+    href: '/parques/flotantes',
+    icon: <FaShip className="text-xl mr-2" />,
+  },
+  {
+    label: 'Parques Urbanos',
+    href: '/parques/urbanos',
+    icon: <FaSwimmer className="text-xl mr-2" />,
+  },
+  {
+    label: 'Atracciones',
+    href: '/atracciones',
+    icon: <FaWater className="text-xl mr-2" />,
+  },
+]
 
 export default function MainButtons() {
   return (
-    <div className="flex flex-wrap justify-center gap-6 mt-12 px-4">
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="bg-gradient-to-r from-blue-400 to-cyan-500 text-white py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
-      >
-        <Link href="/parques-acuaticos/flotantes">
-          <span className="flex items-center gap-2 font-bold text-lg">
-            <Sparkles size={20} /> Parques Flotantes
-          </span>
+    <motion.div
+      className="flex flex-wrap justify-center items-center gap-4 px-4"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+    >
+      {buttons.map((btn, index) => (
+        <Link
+          key={index}
+          href={btn.href}
+          className="flex items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-full shadow-lg transition-all transform hover:scale-105"
+        >
+          {btn.icon}
+          {btn.label}
         </Link>
-      </motion.div>
-
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="bg-gradient-to-r from-pink-500 to-red-500 text-white py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
-      >
-        <Link href="/parques-acuaticos/urbanos">
-          <span className="flex items-center gap-2 font-bold text-lg">
-            <Sparkles size={20} /> Parques Urbanos
-          </span>
-        </Link>
-      </motion.div>
-
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
-      >
-        <Link href="/contacto">
-          <span className="flex items-center gap-2 font-bold text-lg">
-            <Sparkles size={20} /> Contacto
-          </span>
-        </Link>
-      </motion.div>
-    </div>
+      ))}
+    </motion.div>
   )
 }
