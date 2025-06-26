@@ -1,81 +1,46 @@
 'use client'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { Sparkles } from 'lucide-react'
 
-export default function Home() {
-  const scrollRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const style = document.createElement('style')
-    style.innerHTML = `
-      @keyframes floatLogo {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-      }
-
-      @media screen and (max-width: 768px) {
-        .main-title {
-          font-size: 2rem;
-        }
-        .logo-img {
-          width: 120px !important;
-        }
-      }
-    `
-    document.head.appendChild(style)
-  }, [])
-
-  const handleScroll = () => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
+export default function MainButtons() {
   return (
-    <main className="relative w-full h-screen overflow-hidden">
-      {/* Fondo animado */}
-      <video
-        autoPlay
-        loop
-        muted
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        src="/videos/fondo.mp4"
-      />
-
-      {/* Logo flotante */}
+    <div className="flex flex-wrap justify-center gap-6 mt-12 px-4">
       <motion.div
-        className="absolute top-12 left-1/2 transform -translate-x-1/2 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, -10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-gradient-to-r from-blue-400 to-cyan-500 text-white py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
       >
-        <Image
-          src="/imagenes/logo.jpg"
-          alt="Logo AQUAZONE"
-          width={200}
-          height={200}
-          className="logo-img rounded-full shadow-xl"
-        />
+        <Link href="/parques-acuaticos/flotantes">
+          <span className="flex items-center gap-2 font-bold text-lg">
+            <Sparkles size={20} /> Parques Flotantes
+          </span>
+        </Link>
       </motion.div>
 
-      {/* Botón bajar */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
-        <button
-          onClick={handleScroll}
-          className="bg-white/70 hover:bg-white/90 text-black font-bold py-2 px-4 rounded-full shadow-md transition-all"
-        >
-          ↓ Explorar AQUAZONE
-        </button>
-      </div>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-gradient-to-r from-pink-500 to-red-500 text-white py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
+      >
+        <Link href="/parques-acuaticos/urbanos">
+          <span className="flex items-center gap-2 font-bold text-lg">
+            <Sparkles size={20} /> Parques Urbanos
+          </span>
+        </Link>
+      </motion.div>
 
-      {/* Sección inferior de introducción */}
-      <div ref={scrollRef} className="relative z-20 w-full h-[80vh] bg-white flex flex-col items-center justify-center text-center px-6">
-        <h2 className="text-3xl md:text-5xl font-bold text-blue-900 mb-4">
-          Bienvenido a AQUAZONE
-        </h2>
-        <p className="text-gray-700 text-lg max-w-xl">
-          Vive la experiencia acuática más impresionante de Europa. Parques flotantes y terrestres para todas las edades. Descubre nuestras atracciones espectaculares.
-        </p>
-      </div>
-    </main>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all"
+      >
+        <Link href="/contacto">
+          <span className="flex items-center gap-2 font-bold text-lg">
+            <Sparkles size={20} /> Contacto
+          </span>
+        </Link>
+      </motion.div>
+    </div>
   )
 }
