@@ -1,7 +1,8 @@
 'use client'
-import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useEffect, useRef } from 'react'
+import MainButtons from '@/components/MainButtons'
 
 export default function Home() {
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -11,7 +12,7 @@ export default function Home() {
     style.innerHTML = `
       @keyframes floatLogo {
         0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-12px); }
+        50% { transform: translateY(-10px); }
       }
 
       @media screen and (max-width: 768px) {
@@ -32,52 +33,56 @@ export default function Home() {
 
   return (
     <main className="relative w-full h-screen overflow-hidden">
-      {/* Video de fondo */}
+      {/* Fondo animado */}
       <video
         autoPlay
         loop
         muted
-        playsInline
         className="absolute top-0 left-0 w-full h-full object-cover z-0"
         src="/videos/fondo.mp4"
       />
 
-      {/* Logo animado */}
+      {/* Logo flotante */}
       <motion.div
         className="absolute top-12 left-1/2 transform -translate-x-1/2 z-10"
-        initial={{ opacity: 0, y: -10 }}
+        initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, -10, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 2, repeat: Infinity }}
       >
         <Image
           src="/imagenes/logo.jpg"
           alt="Logo AQUAZONE"
           width={200}
           height={200}
-          className="logo-img rounded-full shadow-2xl border-4 border-white"
+          className="logo-img rounded-full shadow-xl"
         />
       </motion.div>
 
-      {/* Botón de exploración */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
+      {/* Botón bajar */}
+      <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-10">
         <button
           onClick={handleScroll}
-          className="bg-white/80 hover:bg-white text-blue-800 font-semibold px-6 py-2 rounded-full shadow-lg transition-all duration-300 backdrop-blur"
+          className="bg-white/70 hover:bg-white/90 text-black font-bold py-2 px-4 rounded-full shadow-md transition-all"
         >
           ↓ Explorar AQUAZONE
         </button>
       </div>
 
-      {/* Sección introductoria */}
+      {/* Botones principales animados */}
+      <div className="absolute bottom-6 w-full z-10">
+        <MainButtons />
+      </div>
+
+      {/* Sección inferior de introducción */}
       <div
         ref={scrollRef}
-        className="relative z-30 w-full h-[80vh] bg-white flex flex-col items-center justify-center text-center px-6"
+        className="relative z-20 w-full h-[80vh] bg-white flex flex-col items-center justify-center text-center px-6"
       >
-        <h2 className="text-3xl md:text-5xl font-extrabold text-blue-800 mb-4">
+        <h2 className="text-3xl md:text-5xl font-bold text-blue-900 mb-4">
           Bienvenido a AQUAZONE
         </h2>
-        <p className="text-gray-700 text-lg max-w-xl leading-relaxed">
-          Vive la experiencia acuática más impresionante de Europa. Parques flotantes y terrestres para todas las edades. Descubre nuestras atracciones espectaculares y sumérgete en un mundo de diversión acuática.
+        <p className="text-gray-700 text-lg max-w-xl">
+          Vive la experiencia acuática más impresionante de Europa. Parques flotantes y terrestres para todas las edades. Descubre nuestras atracciones espectaculares.
         </p>
       </div>
     </main>
