@@ -1,45 +1,57 @@
-"use client"
+'use client'
 
-import { useEffect, useRef } from "react";
-import Image from "next/image";
+import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 export default function HeroSection() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, []);
-
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Background Video */}
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover opacity-80"
+    <section className="relative h-[100vh] w-full overflow-hidden flex items-center justify-center">
+      
+      {/* Fondo Video o Imagen Fija (ya cargado por CSS en page.tsx) */}
+
+      {/* Capa Oscura Superpuesta */}
+      <div className="absolute inset-0 bg-black/60 z-10" />
+
+      {/* Contenido */}
+      <motion.div
+        className="z-20 text-center px-4 max-w-4xl bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/20"
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
       >
-        <source src="/videos/fondo-hero.mp4" type="video/mp4" />
-        Tu navegador no admite video.
-      </video>
+        <motion.h1
+          className="text-4xl md:text-6xl font-bold text-white drop-shadow-xl mb-4"
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ repeat: Infinity, repeatType: 'reverse', duration: 3 }}
+        >
+          Bienvenidos a Aquazone Waterpark
+        </motion.h1>
 
-      {/* Logo animado flotante */}
-      <div className="relative z-10 flex items-center justify-center h-full">
-        <Image
-          src="/images/logo.png"
-          alt="Aquazone Waterpark"
-          width={350}
-          height={350}
-          className="animate-float drop-shadow-xl"
-        />
-      </div>
+        <p className="text-lg md:text-xl text-white/90 mb-6">
+          Vive la experiencia acuática más increíble del verano.
+        </p>
 
-      {/* Capa de sombra para mejorar el contraste */}
-      <div className="absolute inset-0 bg-black/40 z-0" />
+        <div className="flex justify-center space-x-6">
+          <Link href="/flotantes">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold transition-all"
+            >
+              Parques Flotantes
+            </motion.button>
+          </Link>
+
+          <Link href="/terrestres">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-semibold transition-all"
+            >
+              Parques Terrestres
+            </motion.button>
+          </Link>
+        </div>
+      </motion.div>
     </section>
-  );
+  )
 }
