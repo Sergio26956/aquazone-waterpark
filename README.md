@@ -5,6 +5,6 @@ Sitio web completo y visualmente impresionante para parques acuáticos terrestre
 Diseñado para ser:
 - Ultra visual e impactante  
 - Adaptable y editable sin conocimientos técnicos  
-- Integrado con IA, redes sociales y herramientas de contenido automático  
+- Integrado con IA, redes sociales y herramientas de contenido automático.
 
 ### Proyecto en desarrollo 100% personalizado.
