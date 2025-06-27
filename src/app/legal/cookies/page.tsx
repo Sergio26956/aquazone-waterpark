@@ -1,8 +1,14 @@
-export default function PoliticaCookies() {
+'use client'
+
+export default function PoliticaCookiesPage() {
   return (
-    <div className="max-w-3xl mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-6">Política de Cookies</h1>
-      <p>Este texto es un ejemplo. Aquí se explicará el uso de cookies en el sitio web.</p>
-    </div>
-  );
+    <main className="min-h-screen bg-white py-16 px-6">
+      <h1 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
+        Política de Cookies
+      </h1>
+      <p className="text-gray-700 text-lg max-w-4xl">
+        Este sitio utiliza cookies propias y de terceros para mejorar la experiencia del usuario y personalizar el contenido. Puedes aceptar o rechazar las cookies desde tu navegador. Para más información, consulta nuestra política completa.
+      </p>
+    </main>
+  )
 }
