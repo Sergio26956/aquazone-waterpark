@@ -1,22 +1,31 @@
 'use client'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
-export default function PiscinasFlotante() {
+export default function PiscinasPage() {
   return (
-    <div className="min-h-screen py-20 px-6 bg-white">
-      <div className="max-w-5xl mx-auto text-center">
-        <h1 className="text-4xl font-bold text-blue-900 mb-6">Parques Flotantes para Piscinas</h1>
-        <Image
-          src="/images/piscina_flotante.jpg"
-          alt="Parque en piscina"
-          width={800}
-          height={500}
-          className="rounded-xl shadow-xl mx-auto mb-8"
+    <main className="min-h-screen bg-white py-16 px-4">
+      <motion.h1 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-4xl md:text-5xl font-bold text-blue-900 text-center mb-8"
+      >
+        Parques Flotantes en Piscinas
+      </motion.h1>
+
+      <section className="max-w-5xl mx-auto">
+        <Image 
+          src="/images/flotante_piscina.jpg" 
+          alt="Piscina flotante" 
+          width={1200}
+          height={700}
+          className="rounded-lg shadow-lg mb-6"
         />
-        <p className="text-lg text-gray-700">
-          Diseñados especialmente para piscinas municipales o privadas. Seguros, divertidos y modulares. Incluyen plataformas, toboganes y obstáculos.
+        <p className="text-gray-700 text-lg">
+          Ideales para instalaciones temporales o permanentes en piscinas, nuestros parques flotantes ofrecen diversión segura y adaptabilidad para todo tipo de eventos y edades.
         </p>
-      </div>
-    </div>
+      </section>
+    </main>
   )
 }
