@@ -1,23 +1,31 @@
 'use client'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
-export default function PlayasFlotante() {
+export default function PlayasPage() {
   return (
-    <div className="min-h-screen py-20 px-6 bg-white">
-      <div className="max-w-5xl mx-auto text-center">
-        <h1 className="text-4xl font-bold text-blue-900 mb-6">Parques Flotantes en Playas y Lagos</h1>
-        <Image
-          src="/images/playa_flotante.jpg"
-          alt="Parque en playa o lago"
-          width={800}
-          height={500}
-          className="rounded-xl shadow-xl mx-auto mb-8"
+    <main className="min-h-screen bg-white py-16 px-4">
+      <motion.h1 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-4xl md:text-5xl font-bold text-blue-900 text-center mb-8"
+      >
+        Parques Flotantes en Playas
+      </motion.h1>
+
+      <section className="max-w-5xl mx-auto">
+        <Image 
+          src="/images/flotante_playa.jpg" 
+          alt="Parque flotante playa" 
+          width={1200}
+          height={700}
+          className="rounded-lg shadow-lg mb-6"
         />
-        <p className="text-lg text-gray-700">
-          Atracciones sobre el agua que ofrecen una experiencia veraniega inolvidable. Aptos para cualquier playa, lago o embalse. 
-          Alta visibilidad y atractivo para el público.
+        <p className="text-gray-700 text-lg">
+          Diseñados para ambientes naturales como embalses, lagos o playas, nuestros parques flotantes modulares son una experiencia espectacular que atrae a familias y aventureros por igual.
         </p>
-      </div>
-    </div>
+      </section>
+    </main>
   )
 }
