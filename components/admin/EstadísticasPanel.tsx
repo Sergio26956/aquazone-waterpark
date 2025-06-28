@@ -1,8 +1,16 @@
+"use client";
+import React from "react";
+
 export default function EstadisticasPanel() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div className="p-6 bg-blue-100 rounded-xl">Gráfico de reservas</div>
-      <div className="p-6 bg-green-100 rounded-xl">Gráfico de usuarios</div>
-    </div>
-  )
+    <section className="p-8 bg-gradient-to-br from-gray-100 to-white rounded-xl shadow-lg">
+      <h3 className="text-xl font-semibold mb-4">Panel detallado</h3>
+      <ul className="space-y-2">
+        <li>✔️ Parque Urbano – 67% capacidad</li>
+        <li>✔️ Parque Flotante – 82% capacidad</li>
+        <li>✔️ Consultas nuevas – 23 hoy</li>
+        <li>✔️ Reservas esta semana – 87</li>
+      </ul>
+    </section>
+  );
 }
