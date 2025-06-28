@@ -1,51 +1,66 @@
 'use client'
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 
-const navItems = [
-  { label: 'Inicio', href: '/' },
-  { label: 'Parques Flotantes', href: '/parques/flotantes' },
-  { label: 'Parques Urbanos', href: '/parques/urbanos' },
-  { label: 'Atracciones', href: '/atracciones' },
-  { label: 'Contacto', href: '/contacto' },
-]
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { FaBars, FaTimes } from 'react-icons/fa'
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [scrolling, setScrolling] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
+    const onScroll = () => setScrolling(window.scrollY > 50)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
-    <motion.header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
-      }`}
-      initial={{ y: -60 }}
-      animate={{ y: 0 }}
-    >
-      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="text-xl font-extrabold text-blue-700">
+    <>
+      <motion.header
+        className={`fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-4 flex items-center justify-between transition-all duration-300 ${
+          scrolling ? 'bg-black/80 backdrop-blur shadow-lg' : 'bg-transparent'
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Link href="/" className="text-cyan-400 text-xl font-bold tracking-wide">
           AQUAZONE
         </Link>
-        <nav className="flex gap-4">
-          {navItems.map((item, idx) => (
-            <Link
-              key={idx}
-              href={item.href}
-              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
-            >
-              {item.label}
-            </Link>
-          ))}
+
+        <nav className="hidden md:flex space-x-6 text-white text-sm font-medium">
+          <Link href="/flotantes" className="hover:text-cyan-400">Parques Flotantes</Link>
+          <Link href="/terrestres/urbano" className="hover:text-cyan-400">Parques Urbanos</Link>
+          <Link href="/contacto" className="hover:text-cyan-400">Contacto</Link>
         </nav>
-      </div>
-    </motion.header>
+
+        <div className="md:hidden text-white text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </div>
+      </motion.header>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <motion.div
+          className="md:hidden fixed top-16 left-0 right-0 bg-black/90 text-white p-6 z-40 space-y-4 text-center"
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Link href="/flotantes" onClick={() => setMenuOpen(false)}>Parques Flotantes</Link>
+          <Link href="/terrestres/urbano" onClick={() => setMenuOpen(false)}>Parques Urbanos</Link>
+          <Link href="/contacto" onClick={() => setMenuOpen(false)}>Contacto</Link>
+        </motion.div>
+      )}
+
+      {/* Botón flotante contacto */}
+      <a
+        href="/contacto"
+        className="fixed bottom-6 right-6 bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-3 rounded-full text-sm font-bold shadow-lg z-40 transition"
+      >
+        Contactar
+      </a>
+    </>
   )
 }
