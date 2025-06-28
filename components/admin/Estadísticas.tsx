@@ -1,4 +1,3 @@
-// Ruta: components/admin/Estadisticas.tsx
 export default function Estadisticas() {
   return (
     <div className="p-4 bg-white rounded-xl shadow-md">
