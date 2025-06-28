@@ -1,21 +1,61 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 export default function Hero() {
   return (
-    <motion.section
-      className="h-screen flex flex-col items-center justify-center text-center p-4 bg-[url('/images/main-bg.jpg')] bg-cover bg-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.5 }}
-    >
-      <motion.h1 className="text-5xl font-bold text-white drop-shadow" whileHover={{ scale: 1.05 }}>
-        AQUAZONE Water Park
-      </motion.h1>
-      <p className="text-white mt-4 text-lg max-w-xl">
-        Diversión acuática flotante y terrestre. Atracciones móviles, modulares e inolvidables.
-      </p>
-      <Button className="mt-6 text-lg">Explorar Atracciones</Button>
-    </motion.section>
+    <section className="relative h-screen w-full overflow-hidden bg-black text-white flex items-center justify-center">
+      {/* Fondo animado simulado (burbujeo) */}
+      <div className="absolute inset-0 z-0">
+        <video
+          className="w-full h-full object-cover opacity-30"
+          src="/videos/hero-background.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+      </div>
+
+      {/* Capa de color */}
+      <div className="absolute inset-0 bg-black/50 z-10" />
+
+      {/* Contenido */}
+      <motion.div
+        className="relative z-20 text-center px-6"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      >
+        <motion.h1
+          className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4"
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+        >
+          AQUAZONE WATER PARK
+        </motion.h1>
+
+        <motion.p
+          className="text-lg md:text-xl max-w-2xl mx-auto mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.6 }}
+        >
+          Vive la experiencia acuática más impresionante del mundo. Parques flotantes y urbanos llenos de adrenalina y diversión.
+        </motion.p>
+
+        <motion.div
+          className="flex justify-center gap-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 0.5 }}
+        >
+          <Button variant="default" size="lg">Explorar</Button>
+          <Button variant="outline" size="lg">Reservar</Button>
+        </motion.div>
+      </motion.div>
+    </section>
   );
 }
