@@ -1,22 +1,13 @@
-"use client";
+'use client'
 
-import React from "react";
+interface Props {
+  src: string
+}
 
-type VideoPlayerProps = {
-  src: string;
-};
-
-export default function VideoPlayer({ src }: VideoPlayerProps) {
+export default function VideoPlayer({ src }: Props) {
   return (
-    <div className="relative w-full h-64 sm:h-96 overflow-hidden rounded-2xl shadow-lg">
-      <video
-        src={src}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="w-full h-full object-cover"
-      />
+    <div className="w-full aspect-video overflow-hidden rounded-xl shadow-lg">
+      <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover" />
     </div>
-  );
+  )
 }
