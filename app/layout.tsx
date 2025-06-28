@@ -1,24 +1,20 @@
 import './globals.css'
-import { Metadata } from 'next'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
-import { FloatingCallButton } from '@/components/FloatingCallButton'
-import { SocialBar } from '@/components/SocialBar'
+import { ReactNode } from 'react'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'AQUAZONE Water Park',
-  description: 'Parques acuáticos hinchables - Flotantes y Terrestres',
+  description: 'Parques acuáticos flotantes y urbanos de última generación.',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
-      <body className="min-h-screen bg-white text-black font-sans">
+      <body className="bg-black text-white">
         <Header />
-        <main className="relative z-10">{children}</main>
-        <SocialBar />
+        <main className="pt-20">{children}</main>
         <Footer />
-        <FloatingCallButton />
       </body>
     </html>
   )
