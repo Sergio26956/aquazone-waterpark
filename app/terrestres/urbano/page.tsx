@@ -3,51 +3,32 @@
 import Image from "next/image";
 import VideoPlayer from "@/components/VideoPlayer";
 
-const UrbanoPage = () => {
+export default function UrbanoPage() {
   return (
-    <main className="w-full min-h-screen bg-white text-black">
-      <section className="relative w-full h-[60vh]">
-        <VideoPlayer src="/videos/urbano-bg.mp4" poster="/images/urbano-cover.jpg" />
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-white text-center drop-shadow-xl">
-            Parque Acuático Urbano Móvil
-          </h1>
-        </div>
-      </section>
-
-      <section className="max-w-6xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-4">Descripción</h2>
-        <p className="mb-6 text-lg">
-          Diseñado para eventos urbanos y espacios públicos, nuestro parque acuático
-          urbano móvil ofrece actividades refrescantes y divertidas para todas las edades.
+    <section className="relative w-full min-h-screen bg-black text-white px-4 py-16">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-4xl font-bold mb-6 text-center text-aqua">Parque Acuático Urbano Móvil</h1>
+        <p className="text-lg mb-6 text-center">
+          Esta modalidad urbana está compuesta por 5 atracciones espectaculares, montadas sobre asfalto en ciudades o eventos especiales.
         </p>
 
-        <h3 className="text-2xl font-semibold mb-2">Características:</h3>
-        <ul className="list-disc list-inside mb-8 text-lg">
-          <li>Fácil instalación en zonas urbanas</li>
-          <li>Actividades acuáticas portátiles y seguras</li>
-          <li>Diseño modular adaptable</li>
-        </ul>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="relative w-full h-64 md:h-[450px] mb-6 rounded-xl overflow-hidden">
           <Image
-            src="/images/urbano-1.jpg"
-            alt="Parque Urbano 1"
-            width={800}
-            height={600}
-            className="rounded-xl shadow-lg"
-          />
-          <Image
-            src="/images/urbano-2.jpg"
-            alt="Parque Urbano 2"
-            width={800}
-            height={600}
-            className="rounded-xl shadow-lg"
+            src="/images/urbano_categoria.jpg"
+            alt="Parque Urbano Móvil"
+            layout="fill"
+            objectFit="cover"
+            className="rounded-xl"
+            priority
           />
         </div>
-      </section>
-    </main>
-  );
-};
 
-export default UrbanoPage;
+        <VideoPlayer src="/videos/urbano.mp4" />
+
+        <p className="text-md mt-6 text-center">
+          Ideal para instalaciones temporales en zonas urbanas, fiestas locales o eventos especiales. Diversión garantizada sin necesidad de piscina.
+        </p>
+      </div>
+    </section>
+  );
+}
