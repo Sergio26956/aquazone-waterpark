@@ -1,21 +1,20 @@
-"use client";
-import { FaInstagram, FaFacebook, FaTiktok, FaYoutube } from "react-icons/fa";
+'use client'
+
+import React from 'react'
+import { FaInstagram, FaFacebookF, FaWhatsapp } from 'react-icons/fa'
 
 export default function SocialTabs() {
   return (
-    <div className="fixed top-1/2 right-0 z-50 -translate-y-1/2 flex flex-col gap-2 p-2">
-      <a href="https://instagram.com" target="_blank">
-        <FaInstagram className="text-pink-500 hover:scale-110 transition-transform" size={28} />
+    <div className="fixed left-4 top-1/3 z-50 flex flex-col space-y-3">
+      <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+        <FaInstagram className="text-white text-2xl hover:text-pink-500 transition" />
       </a>
-      <a href="https://facebook.com" target="_blank">
-        <FaFacebook className="text-blue-600 hover:scale-110 transition-transform" size={28} />
+      <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+        <FaFacebookF className="text-white text-2xl hover:text-blue-500 transition" />
       </a>
-      <a href="https://tiktok.com" target="_blank">
-        <FaTiktok className="text-black hover:scale-110 transition-transform" size={28} />
-      </a>
-      <a href="https://youtube.com" target="_blank">
-        <FaYoutube className="text-red-600 hover:scale-110 transition-transform" size={28} />
+      <a href="https://wa.me/34600000000" target="_blank" rel="noopener noreferrer">
+        <FaWhatsapp className="text-white text-2xl hover:text-green-500 transition" />
       </a>
     </div>
-  );
+  )
 }
