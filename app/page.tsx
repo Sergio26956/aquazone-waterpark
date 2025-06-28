@@ -1,92 +1,51 @@
-'use client'
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { useEffect, useRef } from 'react'
-import SocialTabs from '@/components/SocialTabs'
-import SocialFooter from '@/components/SocialFooter'
+'use client';
 
-export default function Home() {
-  const scrollRef = useRef<HTMLDivElement>(null)
+import Link from 'next/link'; import { motion } from 'framer-motion'; import { Button } from '@/components/ui/button';
 
-  useEffect(() => {
-    const style = document.createElement('style')
-    style.innerHTML = `
-      @keyframes floatLogo {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-      }
+export default function Home() { return ( <main className="flex flex-col items-center justify-center min-h-screen bg-blue-50 p-6"> <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-4xl font-bold text-blue-900 mb-12 text-center" > AQUAZONE Water Park </motion.h1>
 
-      @media screen and (max-width: 768px) {
-        .main-title {
-          font-size: 2rem;
-        }
-        .logo-img {
-          width: 120px !important;
-        }
-      }
-    `
-    document.head.appendChild(style)
-  }, [])
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-xl">
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="bg-white shadow-xl rounded-2xl p-6 text-center"
+    >
+      <Link href="/flotantes">
+        <Button className="w-full text-lg py-6">Parque Acuático Flotante</Button>
+      </Link>
+    </motion.div>
 
-  const handleScroll = () => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="bg-white shadow-xl rounded-2xl p-6 text-center"
+    >
+      <Link href="/terrestres">
+        <Button className="w-full text-lg py-6">Parque Acuático Terrestre</Button>
+      </Link>
+    </motion.div>
 
-  return (
-    <main className="relative w-full h-screen overflow-hidden">
-      {/* Fondo animado */}
-      <video
-        autoPlay
-        loop
-        muted
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-        src="/videos/fondo.mp4"
-      />
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="bg-white shadow-xl rounded-2xl p-6 text-center"
+    >
+      <Link href="/media">
+        <Button className="w-full text-lg py-6">Zona de Medios</Button>
+      </Link>
+    </motion.div>
 
-      {/* Logo flotante */}
-      <motion.div
-        className="absolute top-12 left-1/2 transform -translate-x-1/2 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, -10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <Image
-          src="/imagenes/logo.jpg"
-          alt="Logo AQUAZONE"
-          width={200}
-          height={200}
-          className="logo-img rounded-full shadow-xl"
-        />
-      </motion.div>
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="bg-white shadow-xl rounded-2xl p-6 text-center"
+    >
+      <Link href="/contacto">
+        <Button className="w-full text-lg py-6">Contacto</Button>
+      </Link>
+    </motion.div>
+  </div>
+</main>
 
-      {/* Botón bajar */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
-        <button
-          onClick={handleScroll}
-          className="bg-white/70 hover:bg-white/90 text-black font-bold py-2 px-4 rounded-full shadow-md transition-all"
-        >
-          ↓ Explorar AQUAZONE
-        </button>
-      </div>
+); }
 
-      {/* Sección inferior de introducción */}
-      <div
-        ref={scrollRef}
-        className="relative z-20 w-full min-h-[100vh] bg-white flex flex-col items-center justify-center text-center px-6 pt-20"
-      >
-        <h2 className="text-3xl md:text-5xl font-bold text-blue-900 mb-4">
-          Bienvenido a AQUAZONE
-        </h2>
-        <p className="text-gray-700 text-lg max-w-xl mb-8">
-          Vive la experiencia acuática más impresionante de Europa. Parques flotantes y terrestres para todas las edades. Descubre nuestras atracciones espectaculares.
-        </p>
-
-        {/* Redes sociales en pestañas */}
-        <SocialTabs />
-      </div>
-
-      {/* Footer con redes */}
-      <SocialFooter />
-    </main>
-  )
-}
