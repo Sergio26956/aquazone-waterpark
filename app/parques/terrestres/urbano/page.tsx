@@ -1,48 +1,23 @@
 'use client'
-
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 
-export default function KamikazeJumpPage() {
+export default function Urbano() {
   return (
-    <motion.div
-      className="min-h-screen bg-yellow-50 flex flex-col items-center justify-center p-6"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-    >
-      <motion.h1
-        className="text-4xl md:text-6xl font-bold text-yellow-800 mb-6 text-center"
-        initial={{ y: -40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3 }}
+    <main className="min-h-screen bg-blue-50 p-6 flex flex-col items-center justify-center text-center">
+      <motion.h1 
+        className="text-4xl font-bold text-green-700 mb-6"
+        initial={{ opacity: 0, y: -30 }} 
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
       >
-        Kamikaze Jump
+        Parque Acuático Urbano Móvil
       </motion.h1>
-
-      <motion.p
-        className="max-w-3xl text-center text-lg md:text-xl text-yellow-700 mb-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-      >
-        La atracción estrella que desafía la gravedad. Para los más valientes, Kamikaze Jump es adrenalina pura en un diseño portátil y visualmente impactante.
-      </motion.p>
-
-      <motion.div
-        className="w-full max-w-4xl"
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.9 }}
-      >
-        <Image
-          src="/images/kamikaze.jpg"
-          alt="Kamikaze Jump"
-          width={1200}
-          height={700}
-          className="rounded-2xl shadow-xl"
-        />
-      </motion.div>
-    </motion.div>
+      <p className="text-lg text-gray-700 mb-8 max-w-2xl">
+        Instalaciones hinchables con piscinas móviles para eventos temporales en calles, plazas y ferias.
+      </p>
+      <div className="w-full h-64 bg-gray-200 rounded-2xl shadow-inner flex items-center justify-center text-gray-500">
+        Imagen o video aquí
+      </div>
+    </main>
   )
 }
