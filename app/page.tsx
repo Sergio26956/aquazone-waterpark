@@ -1,36 +1,29 @@
 'use client'
 
 import HeroSection from '@/components/ui/HeroSection'
-import CategoriasPrincipales from '@/components/CategoriasPrincipales'
-import AnimatedWaveBackground from '@/components/ui/AnimatedWaveBackground'
-import ParallaxBanner from '@/components/ui/ParallaxBanner'
-import FloatingLogo from '@/components/FloatingLogo'
+import IntroBlock from '@/components/IntroBlock'
+import MainButtons from '@/components/MainButtons'
+import VideoBanner from '@/components/VideoBanner'
+import ParallaxSection from '@/components/ParallaxSection'
+import FeatureGrid from '@/components/ui/FeaturesGrid'
+import TestimonialsSection from '@/components/ui/TestimonialsSection'
+import StatsSection from '@/components/ui/StatsSection'
+import SectionDivider from '@/components/ui/SectionDivider'
 import ScrollToTopButton from '@/components/ui/ScrollToTopButton'
-import VideoBackground from '@/components/VideoBackground'
-import VisualEffectsWrapper from '@/components/VisualEffectsWrapper'
-import FloatingCallButton from '@/components/FloatingCallButton'
-import ContactSection from '@/components/sections/contact-section'
-import SocialFeed from '@/components/SocialFeed'
-import StatsSection from '@/components/ui/TestimonialsSection'
-import Footer from '@/components/ui/Footer'
-import StickyContactButton from '@/components/StickyContactButton'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <VisualEffectsWrapper>
-      <VideoBackground />
+    <main className="page-transition">
       <HeroSection />
-      <FloatingLogo />
-      <AnimatedWaveBackground />
-      <ParallaxBanner />
-      <CategoriasPrincipales />
+      <IntroBlock />
+      <MainButtons />
+      <VideoBanner />
+      <ParallaxSection />
+      <FeatureGrid />
+      <SectionDivider />
       <StatsSection />
-      <SocialFeed />
-      <ContactSection />
-      <StickyContactButton />
-      <FloatingCallButton />
+      <TestimonialsSection />
       <ScrollToTopButton />
-      <Footer />
-    </VisualEffectsWrapper>
+    </main>
   )
 }
