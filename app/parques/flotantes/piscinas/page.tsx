@@ -1,48 +1,23 @@
 'use client'
-
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 
-export default function PiscinasPage() {
+export default function Piscinas() {
   return (
-    <motion.div
-      className="min-h-screen bg-blue-50 flex flex-col items-center justify-center p-6"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-    >
-      <motion.h1
-        className="text-4xl md:text-6xl font-bold text-blue-800 mb-6 text-center"
-        initial={{ y: -40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3 }}
+    <main className="min-h-screen bg-blue-50 p-6 flex flex-col items-center justify-center text-center">
+      <motion.h1 
+        className="text-4xl font-bold text-blue-900 mb-6"
+        initial={{ opacity: 0, y: -30 }} 
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
       >
-        Parques Acuáticos Flotantes - Piscinas
+        Parque Acuático Flotante: Piscinas
       </motion.h1>
-
-      <motion.p
-        className="max-w-3xl text-center text-lg md:text-xl text-blue-700 mb-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-      >
-        Atracciones acuáticas flotantes adaptadas a piscinas. Diversión segura, modular y adaptable a cualquier espacio acuático.
-      </motion.p>
-
-      <motion.div
-        className="w-full max-w-4xl"
-        initial={{ scale: 0.95, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.9 }}
-      >
-        <Image
-          src="/images/piscinas.jpg"
-          alt="Parques Acuáticos Flotantes en Piscinas"
-          width={1200}
-          height={700}
-          className="rounded-2xl shadow-xl"
-        />
-      </motion.div>
-    </motion.div>
+      <p className="text-lg text-gray-700 mb-8 max-w-2xl">
+        Parques flotantes modulares diseñados para piscinas municipales o privadas, con juegos hinchables seguros e innovadores.
+      </p>
+      <div className="w-full h-64 bg-gray-200 rounded-2xl shadow-inner flex items-center justify-center text-gray-500">
+        Video o imagen destacada aquí
+      </div>
+    </main>
   )
 }
