@@ -16,7 +16,7 @@ export default function Home() {
 
       <div className="absolute inset-0 flex items-center justify-center z-40">
         <motion.img
-          src="/logo.png"
+          src="/images/Logo.jpg"
           alt="Logo Aquazone Water Park"
           initial={{ opacity: 0, scale: 0.6 }}
           animate={{ opacity: 1, scale: 1 }}
