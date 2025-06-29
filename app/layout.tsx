@@ -1,17 +1,17 @@
 import './globals.css'
+import Header from '@/components/ui/Header'
+import Footer from '@/components/ui/Footer'
 import { ReactNode } from 'react'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 
 export const metadata = {
-  title: 'AQUAZONE Water Park',
-  description: 'Parques acuáticos flotantes y urbanos de última generación.',
+  title: 'AQUAZONE Waterpark',
+  description: 'Parques acuáticos modulares flotantes y urbanos móviles',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
-      <body className="bg-black text-white">
+      <body>
         <Header />
         <main className="pt-20">{children}</main>
         <Footer />
