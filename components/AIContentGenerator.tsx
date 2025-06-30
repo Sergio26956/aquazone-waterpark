@@ -1,31 +1,41 @@
-"use client";
-import { useState } from "react";
-import AnimatedButton from "./AnimatedButton";
+'use client'
+
+import { useState } from 'react'
 
 export default function AIContentGenerator() {
-  const [topic, setTopic] = useState("");
-  const [result, setResult] = useState("");
+  const [prompt, setPrompt] = useState('')
+  const [result, setResult] = useState('')
 
-  const handleGenerate = async () => {
-    setResult(`Generando contenido IA para: "${topic}"...`);
-    setTimeout(() => {
-      setResult(`✅ Contenido generado automáticamente sobre "${topic}". Puedes editarlo o publicarlo.`);
-    }, 1500);
-  };
+  const generate = async () => {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      body: JSON.stringify({ prompt }),
+    })
+
+    const { content } = await res.json()
+    setResult(content)
+  }
 
   return (
-    <div className="bg-white/10 rounded-xl p-6 w-full shadow-xl">
-      <h2 className="text-white text-xl font-semibold mb-4">🧠 Generador de Contenido IA</h2>
-      <input
-        value={topic}
-        onChange={(e) => setTopic(e.target.value)}
-        className="w-full p-3 rounded-md text-black mb-3"
-        placeholder="Introduce el tema o título..."
+    <div className="space-y-4 bg-white p-6 rounded-xl shadow-md max-w-2xl mx-auto">
+      <h2 className="text-xl font-bold">Generador de Contenido IA</h2>
+      <textarea
+        value={prompt}
+        onChange={(e) => setPrompt(e.target.value)}
+        placeholder="Escribe una idea, tema o concepto..."
+        className="w-full border p-3 rounded-md"
       />
-      <AnimatedButton text="Generar Contenido" onClick={handleGenerate} />
+      <button
+        onClick={generate}
+        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+      >
+        Generar
+      </button>
       {result && (
-        <p className="text-green-300 mt-4 bg-black/20 rounded-lg p-4">{result}</p>
+        <div className="mt-4 p-4 border bg-gray-50 rounded-md">
+          <p>{result}</p>
+        </div>
       )}
     </div>
-  );
+  )
 }
