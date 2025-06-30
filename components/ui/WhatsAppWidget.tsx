@@ -1,16 +1,16 @@
 'use client'
-import { useEffect } from 'react'
+
+import { FaWhatsapp } from 'react-icons/fa'
 
 export default function WhatsAppWidget() {
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = 'https://wati-integration-service.clare.ai/v2/watiWidget.js?63451'
-    script.async = true
-    script.onload = () => {
-      window.CreateWhatsappChatWidget && window.CreateWhatsappChatWidget()
-    }
-    document.body.appendChild(script)
-  }, [])
-
-  return null
+  return (
+    <a
+      href="https://wa.me/34600000000"
+      className="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaWhatsapp size={28} />
+    </a>
+  )
 }
