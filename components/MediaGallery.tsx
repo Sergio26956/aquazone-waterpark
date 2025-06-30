@@ -1,37 +1,41 @@
-"use client";
-import { useState } from "react";
+'use client'
 
-const images = [
-  "/images/aquazone1.jpg",
-  "/images/aquazone2.jpg",
-  "/images/aquazone3.jpg",
-];
+import Image from 'next/image'
+import { useState } from 'react'
+
+const media = [
+  { type: 'image', src: '/images/galeria1.jpg' },
+  { type: 'image', src: '/images/galeria2.jpg' },
+  { type: 'video', src: '/videos/promo1.mp4' },
+  { type: 'image', src: '/images/galeria3.jpg' },
+  { type: 'video', src: '/videos/promo2.mp4' }
+]
 
 export default function MediaGallery() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState(null)
 
   return (
-    <section className="p-6 bg-white mt-8 rounded shadow">
-      <h2 className="text-3xl font-bold mb-4">Galería Multimedia</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {images.map((src, i) => (
-          <img
+    <section className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
+      {media.map((item, i) =>
+        item.type === 'image' ? (
+          <Image
             key={i}
-            src={src}
-            alt={`imagen-${i}`}
-            onClick={() => setSelected(src)}
-            className="cursor-pointer rounded hover:scale-105 transition"
+            src={item.src}
+            alt={`Media ${i}`}
+            width={800}
+            height={600}
+            className="rounded-xl shadow-lg cursor-pointer hover:scale-105 transition"
+            onClick={() => setSelected(item.src)}
           />
-        ))}
-      </div>
-      {selected && (
-        <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
-          onClick={() => setSelected(null)}
-        >
-          <img src={selected} className="max-w-[90%] max-h-[90%] rounded" />
-        </div>
+        ) : (
+          <video
+            key={i}
+            src={item.src}
+            controls
+            className="rounded-xl shadow-lg cursor-pointer hover:scale-105 transition"
+          />
+        )
       )}
     </section>
-  );
+  )
 }
