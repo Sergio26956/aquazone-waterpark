@@ -1,21 +1,18 @@
-"use client";
-import { motion } from "framer-motion";
+'use client'
 
-interface AnimatedSectionProps {
-  children: React.ReactNode;
-  delay?: number;
-}
+import { motion } from 'framer-motion'
+import { ReactNode } from 'react'
 
-export default function AnimatedSection({ children, delay = 0 }: AnimatedSectionProps) {
+export default function AnimatedSection({ children }: { children: ReactNode }) {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay }}
-      className="w-full"
+      className="my-8"
     >
       {children}
     </motion.section>
-  );
+  )
 }
