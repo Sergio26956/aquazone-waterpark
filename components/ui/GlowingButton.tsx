@@ -1,4 +1,3 @@
-// components/ui/GlowingButton.tsx
 'use client'
 
 import { motion } from 'framer-motion'
