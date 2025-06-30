@@ -1,46 +1,38 @@
-import React, { useState } from 'react';
+"use client";
 
-const CampaignManager: React.FC = () => {
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
-  const [preview, setPreview] = useState('');
+import { useState } from "react";
+import { generarCampaña } from "@/lib/ai/campaignGenerator";
 
-  const generateContent = () => {
-    setPreview(`Campaña IA generada con el asunto: "${subject}" y contenido: "${message}"`);
+export default function CampaingManager() {
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+
+  const lanzarGenerador = async () => {
+    const data = await generarCampaña(input);
+    setOutput(data || "No se generó contenido.");
   };
 
   return (
-    <div className="bg-white p-4 rounded-2xl shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Campañas y Mailing Automático (IA)</h2>
-      <input
-        type="text"
-        className="w-full mb-2 p-2 border rounded"
-        placeholder="Asunto del Email"
-        value={subject}
-        onChange={(e) => setSubject(e.target.value)}
-      />
+    <div className="p-4 bg-white rounded-xl shadow-lg">
+      <h2 className="text-2xl font-semibold mb-2">IA - Generador de Campañas</h2>
       <textarea
-        className="w-full mb-2 p-2 border rounded"
-        placeholder="Mensaje de la campaña"
-        rows={6}
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        className="w-full p-2 border rounded mb-3"
+        placeholder="Escribe una idea base..."
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        rows={4}
       />
       <button
-        onClick={generateContent}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        onClick={lanzarGenerador}
+        className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
       >
-        Generar Campaña IA
+        Generar campaña
       </button>
-
-      {preview && (
-        <div className="mt-4 p-4 bg-gray-100 border rounded">
-          <h3 className="font-bold mb-2">Vista previa:</h3>
-          <p>{preview}</p>
+      {output && (
+        <div className="mt-4 p-3 bg-gray-50 border rounded text-sm whitespace-pre-wrap">
+          {output}
         </div>
       )}
     </div>
   );
-};
-
-export default CampaignManager;
+}
