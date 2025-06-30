@@ -1,24 +1,18 @@
-"use client";
+'use client'
 
-import { Button } from "@/components/ui/button";
-import ScrollReveal from "./ScrollReveal";
+import Link from 'next/link'
 
 export default function CallToActionSection() {
   return (
-    <section className="relative bg-[#0d1b2a] py-24 text-white">
-      <div className="mx-auto max-w-5xl px-6 text-center">
-        <ScrollReveal>
-          <h2 className="mb-6 text-4xl font-bold">¿Estás listo para vivir la experiencia AQUAZONE?</h2>
-          <p className="mb-8 text-lg text-white/80">
-            Explora nuestros parques, sumérgete en las atracciones más espectaculares y reserva tu aventura.
-          </p>
-        </ScrollReveal>
-        <ScrollReveal delay={0.2}>
-          <Button size="lg" className="text-lg">
-            Ver Parques Acuáticos
-          </Button>
-        </ScrollReveal>
-      </div>
+    <section className="relative bg-gradient-to-r from-cyan-500 to-blue-700 text-white p-12 rounded-2xl shadow-xl overflow-hidden text-center">
+      <h2 className="text-4xl font-bold mb-4">¿Listo para vivir la experiencia AQUAZONE?</h2>
+      <p className="mb-6 text-lg">Haz tu reserva ahora y asegúrate un verano inolvidable.</p>
+      <Link
+        href="/contacto"
+        className="bg-white text-blue-700 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition"
+      >
+        ¡Reserva ya!
+      </Link>
     </section>
-  );
+  )
 }
