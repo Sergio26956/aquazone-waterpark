@@ -1,24 +1,16 @@
-"use client";
-import React from "react";
+'use client'
 
-interface VideoPlayerProps {
-  src: string;
-  poster?: string;
+interface Props {
+  src: string
 }
 
-export default function VideoPlayer({ src, poster }: VideoPlayerProps) {
+export default function VideoPlayer({ src }: Props) {
   return (
     <video
-      className="w-full h-auto rounded-xl shadow-lg"
-      controls
+      src={src}
       autoPlay
-      loop
-      muted
-      playsInline
-      poster={poster}
-    >
-      <source src={src} type="video/mp4" />
-      Tu navegador no soporta el video.
-    </video>
-  );
+      controls
+      className="max-w-full max-h-[90vh] rounded-xl shadow-xl"
+    />
+  )
 }
