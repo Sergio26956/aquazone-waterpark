@@ -1,31 +1,63 @@
-"use client";
-import { useState } from "react";
-import AnimatedButton from "./AnimatedButton";
+'use client'
 
-export default function AIContentGenerator() {
-  const [topic, setTopic] = useState("");
-  const [result, setResult] = useState("");
+import { useState } from 'react'
+import { DndContext, closestCenter, useDraggable, useDroppable } from '@dnd-kit/core'
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
 
-  const handleGenerate = async () => {
-    setResult(`Generando contenido IA para: "${topic}"...`);
-    setTimeout(() => {
-      setResult(`✅ Contenido generado automáticamente sobre "${topic}". Puedes editarlo o publicarlo.`);
-    }, 1500);
-  };
+const initialBlocks = [
+  { id: '1', type: 'image', content: '/images/slider1.jpg' },
+  { id: '2', type: 'video', content: '/videos/video1.mp4' },
+  { id: '3', type: 'text', content: 'Bienvenidos a AQUAZONE Water Park' },
+]
+
+export default function BuilderEditor() {
+  const [blocks, setBlocks] = useState(initialBlocks)
+
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event
+    if (active.id !== over?.id) {
+      const oldIndex = blocks.findIndex((b) => b.id === active.id)
+      const newIndex = blocks.findIndex((b) => b.id === over?.id)
+      const updated = [...blocks]
+      const [moved] = updated.splice(oldIndex, 1)
+      updated.splice(newIndex, 0, moved)
+      setBlocks(updated)
+    }
+  }
 
   return (
-    <div className="bg-white/10 rounded-xl p-6 w-full shadow-xl">
-      <h2 className="text-white text-xl font-semibold mb-4">🧠 Generador de Contenido IA</h2>
-      <input
-        value={topic}
-        onChange={(e) => setTopic(e.target.value)}
-        className="w-full p-3 rounded-md text-black mb-3"
-        placeholder="Introduce el tema o título..."
-      />
-      <AnimatedButton text="Generar Contenido" onClick={handleGenerate} />
-      {result && (
-        <p className="text-green-300 mt-4 bg-black/20 rounded-lg p-4">{result}</p>
+    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} modifiers={[restrictToVerticalAxis]}>
+      <div className="space-y-4 p-6 bg-neutral-100 rounded-xl">
+        {blocks.map((block) => (
+          <DraggableBlock key={block.id} block={block} />
+        ))}
+      </div>
+    </DndContext>
+  )
+}
+
+function DraggableBlock({ block }: { block: any }) {
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: block.id,
+  })
+
+  const { setNodeRef: setDropRef } = useDroppable({ id: block.id })
+
+  return (
+    <div
+      ref={(el) => {
+        setNodeRef(el)
+        setDropRef(el)
+      }}
+      {...listeners}
+      {...attributes}
+      className={`border border-gray-300 bg-white p-4 rounded-lg shadow-sm ${isDragging ? 'opacity-30' : ''}`}
+    >
+      {block.type === 'text' && <p className="text-lg font-semibold">{block.content}</p>}
+      {block.type === 'image' && <img src={block.content} className="rounded-md w-full max-h-60 object-cover" />}
+      {block.type === 'video' && (
+        <video src={block.content} className="rounded-md w-full max-h-60" controls muted />
       )}
     </div>
-  );
+  )
 }
