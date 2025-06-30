@@ -1,52 +1,42 @@
-import { parques } from "@/lib/data";
+'use client'
+
+import Link from 'next/link'
+import Image from 'next/image'
 
 export default function SectionParques() {
-  return (
-    <section className="p-6 bg-white rounded shadow-xl">
-      <h2 className="text-3xl font-bold mb-4">Parques Acuáticos</h2>
+  const parques = [
+    {
+      nombre: 'Parques Flotantes',
+      imagen: '/images/flotante.jpg',
+      enlace: '/parques/flotantes',
+    },
+    {
+      nombre: 'Parques Urbanos',
+      imagen: '/images/urbano.jpg',
+      enlace: '/parques/urbanos',
+    },
+  ]
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <div>
-          <h3 className="text-xl font-semibold mb-2">Flotantes: Piscinas</h3>
-          {parques.flotantes.piscinas.map((p, i) => (
-            <div key={i} className="mb-3">
-              <img src={p.imagen} alt={p.nombre} className="rounded w-full mb-1" />
-              <p className="font-bold">{p.nombre}</p>
-              <p>{p.descripcion}</p>
-            </div>
-          ))}
-        </div>
-        <div>
-          <h3 className="text-xl font-semibold mb-2">Flotantes: Playas</h3>
-          {parques.flotantes.playas.map((p, i) => (
-            <div key={i} className="mb-3">
-              <img src={p.imagen} alt={p.nombre} className="rounded w-full mb-1" />
-              <p className="font-bold">{p.nombre}</p>
-              <p>{p.descripcion}</p>
-            </div>
-          ))}
-        </div>
-        <div>
-          <h3 className="text-xl font-semibold mb-2">Urbanos: Actividades</h3>
-          {parques.urbanos.actividades.map((p, i) => (
-            <div key={i} className="mb-3">
-              <img src={p.imagen} alt={p.nombre} className="rounded w-full mb-1" />
-              <p className="font-bold">{p.nombre}</p>
-              <p>{p.descripcion}</p>
-            </div>
-          ))}
-        </div>
-        <div>
-          <h3 className="text-xl font-semibold mb-2">Kamikaze Jump</h3>
-          {parques.urbanos.kamikazeJump.map((p, i) => (
-            <div key={i} className="mb-3">
-              <img src={p.imagen} alt={p.nombre} className="rounded w-full mb-1" />
-              <p className="font-bold">{p.nombre}</p>
-              <p>{p.descripcion}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+  return (
+    <section className="grid md:grid-cols-2 gap-8 py-16">
+      {parques.map((p) => (
+        <Link
+          key={p.nombre}
+          href={p.enlace}
+          className="relative group overflow-hidden rounded-3xl shadow-lg"
+        >
+          <Image
+            src={p.imagen}
+            alt={p.nombre}
+            width={800}
+            height={600}
+            className="w-full h-96 object-cover transform group-hover:scale-110 transition duration-700"
+          />
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-3xl font-bold group-hover:bg-black/30 transition">
+            {p.nombre}
+          </div>
+        </Link>
+      ))}
     </section>
-  );
+  )
 }
