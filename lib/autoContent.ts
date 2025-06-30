@@ -1,7 +1,12 @@
-export function generarTextoRedes(titulo: string, tipo: 'flotante' | 'urbano') {
-  const base = tipo === 'flotante'
-    ? '💧 Vive una experiencia única sobre el agua. Descubre nuestros parques flotantes en playas y piscinas. 🌊'
-    : '🏙️ Llevamos la diversión a tu ciudad. Parques acuáticos móviles ideales para plazas y eventos. 🎉'
+import { OpenAI } from 'openai'
 
-  return `${base}\n\n🔹 ${titulo}\n\n#AQUAZONE #Diversión #Verano2025`
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' })
+
+export async function generateContent(prompt: string): Promise<string> {
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4',
+    messages: [{ role: 'user', content: prompt }],
+  })
+
+  return completion.choices[0].message.content || ''
 }
