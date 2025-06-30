@@ -1,33 +1,26 @@
-"use client";
-import { motion } from "framer-motion";
+'use client'
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
-}
+import { useEffect, useState } from 'react'
 
-export default function FloatingModal({ isOpen, onClose, title, children }: Props) {
-  if (!isOpen) return null;
+export default function FloatingModal() {
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShow(true), 5000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (!show) return null
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ scale: 0.8, y: 50 }}
-        animate={{ scale: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-xl p-6 w-full max-w-md shadow-2xl"
+    <div className="fixed bottom-20 right-6 bg-white p-4 rounded-xl shadow-2xl border border-cyan-300 z-50">
+      <p className="text-cyan-800 font-bold">🎉 ¡Reserva ahora y obtén un 10% de descuento!</p>
+      <button
+        className="mt-2 text-sm text-red-500 underline"
+        onClick={() => setShow(false)}
       >
-        <h3 className="text-xl font-semibold mb-4 text-gray-800">{title}</h3>
-        <div>{children}</div>
-      </motion.div>
-    </motion.div>
-  );
+        Cerrar
+      </button>
+    </div>
+  )
 }
