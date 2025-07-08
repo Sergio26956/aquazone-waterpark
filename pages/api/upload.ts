@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { v2 as cloudinary } from 'cloudinary';
 import formidable from 'formidable';
 import fs from 'fs';
-import cloudinary from 'cloudinary';
 
-cloudinary.v2.config({
+cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
@@ -17,25 +17,34 @@ export const config = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  const form = new formidable.IncomingForm({ keepExtensions: true });
+  const form = new formidable.IncomingForm();
+  form.uploadDir = '/tmp';
+  form.keepExtensions = true;
 
   form.parse(req, async (err, fields, files) => {
-    if (err || !files.file) {
-      return res.status(400).json({ message: 'Upload error' });
+    if (err) {
+      return res.status(500).json({ error: 'Error al procesar el archivo' });
     }
 
     const file = Array.isArray(files.file) ? files.file[0] : files.file;
+    if (!file) {
+      return res.status(400).json({ error: 'Archivo no encontrado' });
+    }
 
-    const upload = await cloudinary.v2.uploader.upload(file.filepath, {
-      folder: 'aquazone',
-    });
+    try {
+      const result = await cloudinary.uploader.upload(file.filepath, {
+        folder: 'aquazone',
+      });
 
-    // borrar temp
-    fs.unlinkSync(file.filepath);
+      // Borrar temp
+      fs.unlinkSync(file.filepath);
 
-    res.status(200).json({ url: upload.secure_url });
+      return res.status(200).json({ url: result.secure_url });
+    } catch (uploadError) {
+      return res.status(500).json({ error: 'Error al subir a Cloudinary' });
+    }
   });
 }
