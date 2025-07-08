@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { IncomingForm } from 'formidable';
+import formidable from 'formidable';
 import fs from 'fs';
 import cloudinary from 'cloudinary';
 
@@ -17,34 +17,25 @@ export const config = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método no permitido' });
+    return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const form = new IncomingForm();
+  const form = new formidable.IncomingForm({ keepExtensions: true });
 
-  form.parse(req, async (err, fields, files: any) => {
-    if (err) return res.status(500).json({ error: 'Error al procesar el archivo' });
-
-    const file = files.file[0];
-    const data = fs.readFileSync(file.filepath);
-
-    try {
-      const upload = await cloudinary.v2.uploader.upload_stream(
-        { folder: 'aquazone' },
-        (error, result) => {
-          if (error || !result) return res.status(500).json({ error: 'Fallo en subida' });
-          return res.status(200).json({ url: result.secure_url });
-        }
-      );
-
-      // subir el archivo al stream
-      const readable = fs.createReadStream(file.filepath);
-      readable.pipe(upload);
-
-      // borrar temp
-      fs.unlinkSync(file.filepath);
-    } catch (e) {
-      res.status(500).json({ error: 'Error al subir a Cloudinary' });
+  form.parse(req, async (err, fields, files) => {
+    if (err || !files.file) {
+      return res.status(400).json({ message: 'Upload error' });
     }
+
+    const file = Array.isArray(files.file) ? files.file[0] : files.file;
+
+    const upload = await cloudinary.v2.uploader.upload(file.filepath, {
+      folder: 'aquazone',
+    });
+
+    // borrar temp
+    fs.unlinkSync(file.filepath);
+
+    res.status(200).json({ url: upload.secure_url });
   });
 }
