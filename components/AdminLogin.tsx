@@ -1,40 +1,32 @@
-"use client";
+'use client';
+import { useState } from 'react';
 
-import { useState } from "react";
+export default function AdminLogin({ onLogin }: { onLogin: () => void }) {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-export default function AdminLogin() {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    if (email === "admin@aquazone.com" && pass === "1234") {
-      setLoggedIn(true);
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+      onLogin();
+    } else {
+      setError('Contraseña incorrecta');
     }
-  };
-
-  if (loggedIn) {
-    return <p className="text-green-600">Acceso concedido al panel de administración.</p>;
   }
 
   return (
-    <div className="p-4 max-w-sm mx-auto border rounded bg-white shadow">
-      <h3 className="mb-2 font-bold text-xl">Panel Administrativo</h3>
-      <input
-        type="email"
-        placeholder="Correo"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="w-full mb-2 px-3 py-2 border"
-      />
+    <form onSubmit={handleSubmit} className="max-w-sm mx-auto p-6 bg-white rounded shadow">
+      <h2 className="text-xl font-bold mb-4 text-center">Acceso Zona Administrativa</h2>
       <input
         type="password"
         placeholder="Contraseña"
-        value={pass}
-        onChange={(e) => setPass(e.target.value)}
-        className="w-full mb-2 px-3 py-2 border"
+        className="w-full p-2 border rounded mb-4"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
       />
-      <button onClick={handleLogin} className="bg-blue-600 text-white w-full py-2">Entrar</button>
-    </div>
+      <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Entrar</button>
+      {error && <p className="text-red-600 mt-2 text-center">{error}</p>}
+    </form>
   );
 }
