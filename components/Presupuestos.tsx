@@ -14,19 +14,26 @@ export default function BudgetManager() {
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-2">Gestión de Presupuestos</h3>
+      <h3 className="text-xl font-bold mb-2">Presupuestos</h3>
       <div className="flex gap-2 mb-4">
         <input
           type="text"
           className="border p-2 flex-1"
-          placeholder="Nuevo presupuesto"
+          placeholder="Presupuesto o descripción"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={addBudget} className="bg-green-600 text-white px-4 py-2 rounded">Añadir</button>
+        <button
+          onClick={addBudget}
+          className="bg-yellow-600 text-white px-4 py-2 rounded"
+        >
+          Añadir
+        </button>
       </div>
       <ul className="list-disc pl-6">
-        {budgets.map((b, idx) => (<li key={idx}>{b}</li>))}
+        {budgets.map((b, idx) => (
+          <li key={idx}>{b}</li>
+        ))}
       </ul>
     </div>
   );
