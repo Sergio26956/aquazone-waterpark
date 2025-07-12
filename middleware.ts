@@ -1,18 +1,32 @@
-import { NextResponse } from "next/server"
-import type { NextRequest } from "next/server"
+import { NextRequest, NextResponse } from 'next/server';
+
+const locales = ['es', 'en', 'fr', 'de', 'pt'];
+const defaultLocale = 'es';
+
+function getLocale(request: NextRequest) {
+  const acceptLanguage = request.headers.get('accept-language') || '';
+  const preferred = acceptLanguage.split(',')[0].split('-')[0];
+  return locales.includes(preferred) ? preferred : defaultLocale;
+}
 
 export function middleware(request: NextRequest) {
-  const isAuthenticated = true // Cambiar a lógica real de autenticación
+  const { pathname } = request.nextUrl;
 
-  const adminPath = request.nextUrl.pathname.startsWith("/admin")
-
-  if (adminPath && !isAuthenticated) {
-    return NextResponse.redirect(new URL("/login", request.url))
+  if (
+    pathname.startsWith('/api') ||
+    pathname.startsWith('/_next') ||
+    pathname.includes('.') ||
+    locales.some((loc) => pathname.startsWith(`/${loc}`))
+  ) {
+    return NextResponse.next();
   }
 
-  return NextResponse.next()
+  const locale = getLocale(request);
+  const url = request.nextUrl.clone();
+  url.pathname = `/${locale}${pathname}`;
+  return NextResponse.redirect(url);
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
-}
+  matcher: ['/((?!_next|api|static|.*\\..*).*)'],
+};
