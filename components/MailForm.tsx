@@ -7,7 +7,7 @@ export default function MailForm() {
   const [event, setEvent] = useState('');
   const [status, setStatus] = useState('');
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus('Enviando...');
 
