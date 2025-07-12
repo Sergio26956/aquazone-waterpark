@@ -35,7 +35,11 @@ export default function SEOEditor() {
           Optimizar Texto
         </button>
       </form>
-      {loading ? <p className="mt-4 text-sm">Optimizando...</p> : <p className="mt-4 text-sm whitespace-pre-line">{optimized}</p>}
+      {loading ? (
+        <p className="mt-4 text-sm">Optimizando...</p>
+      ) : (
+        <p className="mt-4 text-sm whitespace-pre-line">{optimized}</p>
+      )}
     </div>
   );
 }
