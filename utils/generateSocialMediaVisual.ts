@@ -3,7 +3,7 @@ import { generateMediaPrompt } from './generateMediaPrompt';
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-export async function generateSocialMediaVisual(eventType, style) {
+export async function generateSocialMediaVisual(eventType: string, style: string) {
   const prompt = generateMediaPrompt(eventType, style);
   const completion = await openai.chat.completions.create({
     model: 'gpt-4o-mini',
