@@ -1,24 +1,20 @@
 import './globals.css';
-import NavBar from '@/components/NavBar';
-import Footer from '@/components/Footer';
-import { ReactNode } from 'react';
+import { Inter } from 'next/font/google';
+import WhatsAppFloatingButton from '@/components/WhatsAppFloatingButton';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'AQUAZONE WaterPark',
-  description: 'Parques acuáticos flotantes y urbanos de nueva generación.',
-  icons: {
-    icon: '/icons/favicon.ico',
-  },
+  title: 'AQUAZONE Water Park',
+  description: 'Parques acuáticos innovadores y espectaculares',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <head />
-      <body className="bg-black text-white">
-        <NavBar />
-        <div className="pt-20">{children}</div>
-        <Footer />
+      <body className={inter.className}>
+        {children}
+        <WhatsAppFloatingButton />
       </body>
     </html>
   );
