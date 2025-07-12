@@ -1,27 +1,33 @@
+'use client';
 import { useState } from 'react';
 
 export default function VisualAIAssistant() {
-  const [suggestion, setSuggestion] = useState('');
+  const [prompt, setPrompt] = useState('');
+  const [result, setResult] = useState('');
 
-  const getSuggestion = async () => {
-    const res = await fetch('/api/visual-suggestion');
-    const data = await res.json();
-    setSuggestion(data.suggestion);
+  const generateImage = async () => {
+    if (!prompt.trim()) return;
+    setResult('Generando imagen...');
+    // Simula una llamada a un generador IA
+    setTimeout(() => {
+      setResult(`✅ Imagen generada a partir del prompt: "${prompt}"`);
+    }, 2000);
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      <button
-        onClick={getSuggestion}
-        className="bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition"
-      >
-        IA Sugerencia Visual
+    <div className="p-4 bg-white rounded shadow">
+      <h2 className="text-xl font-bold mb-2">Asistente Visual IA</h2>
+      <input
+        type="text"
+        className="border p-2 w-full mb-2"
+        placeholder="Describe la imagen que deseas"
+        value={prompt}
+        onChange={(e) => setPrompt(e.target.value)}
+      />
+      <button onClick={generateImage} className="bg-blue-600 text-white px-4 py-2 rounded">
+        Generar Imagen
       </button>
-      {suggestion && (
-        <div className="mt-2 bg-white text-black p-4 rounded-xl shadow-xl max-w-sm">
-          {suggestion}
-        </div>
-      )}
+      <p className="mt-4">{result}</p>
     </div>
   );
 }
