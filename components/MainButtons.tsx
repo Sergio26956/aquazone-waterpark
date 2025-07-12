@@ -1,32 +1,26 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import Link from 'next/link'
+'use client';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 export default function MainButtons() {
-  return (
-    <div className="flex gap-6 flex-wrap justify-center">
-      <motion.div
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <Link href="/contact">
-          <button className="px-6 py-3 bg-cyan-600 text-white rounded-2xl shadow-lg text-lg font-bold hover:bg-cyan-700 transition">
-            Reserva Ahora
-          </button>
-        </Link>
-      </motion.div>
+  const router = useRouter();
 
-      <motion.div
+  return (
+    <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-10">
+      <motion.button
         whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
+        className="bg-blue-600 text-white text-xl px-6 py-4 rounded-xl shadow-lg"
+        onClick={() => router.push('/parques/flotantes')}
       >
-        <Link href="/galeria">
-          <button className="px-6 py-3 bg-white text-cyan-700 border-2 border-cyan-600 rounded-2xl shadow-md text-lg font-bold hover:bg-cyan-100 transition">
-            Ver Galería
-          </button>
-        </Link>
-      </motion.div>
+        🌊 Parque Acuático Flotante
+      </motion.button>
+      <motion.button
+        whileHover={{ scale: 1.1 }}
+        className="bg-green-600 text-white text-xl px-6 py-4 rounded-xl shadow-lg"
+        onClick={() => router.push('/parques/urbanos')}
+      >
+        🏙️ Parque Acuático Urbano Móvil
+      </motion.button>
     </div>
-  )
+  );
 }
