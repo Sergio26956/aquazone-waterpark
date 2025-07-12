@@ -3,9 +3,9 @@ import { useState } from 'react';
 
 export default function Chatbot() {
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<string[]>([]);
 
-  async function sendMessage(e) {
+  async function sendMessage(e: React.FormEvent) {
     e.preventDefault();
     if (!input.trim()) return;
 
