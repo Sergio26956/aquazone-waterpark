@@ -3,9 +3,9 @@ import { useState } from 'react';
 
 export default function Chatbot() {
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState([]);
 
-  async function sendMessage(e: React.FormEvent) {
+  async function sendMessage(e) {
     e.preventDefault();
     if (!input.trim()) return;
 
@@ -27,22 +27,11 @@ export default function Chatbot() {
     <div className="bg-white rounded-xl shadow-md p-6 max-w-xl mx-auto mt-8">
       <h2 className="text-2xl font-bold mb-4 text-center">Chatbot IA AQUAZONE</h2>
       <div className="space-y-2 max-h-64 overflow-y-auto border p-2 mb-4 rounded">
-        {messages.map((msg, idx) => (
-          <p key={idx} className="text-sm">{msg}</p>
-        ))}
+        {messages.map((msg, idx) => (<p key={idx} className="text-sm">{msg}</p>))}
       </div>
       <form onSubmit={sendMessage} className="flex gap-2">
-        <input
-          type="text"
-          placeholder="Escribe tu pregunta..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 p-2 border rounded"
-          required
-        />
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-          Enviar
-        </button>
+        <input type="text" placeholder="Escribe tu pregunta..." value={input} onChange={(e) => setInput(e.target.value)} className="flex-1 p-2 border rounded" required />
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Enviar</button>
       </form>
     </div>
   );
