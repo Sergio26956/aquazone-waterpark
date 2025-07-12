@@ -14,7 +14,7 @@ export default function CampaignManager() {
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-2">Campañas de Marketing</h3>
+      <h3 className="text-xl font-bold mb-2">Gestor de Campañas</h3>
       <div className="flex gap-2 mb-4">
         <input
           type="text"
@@ -23,10 +23,17 @@ export default function CampaignManager() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={addCampaign} className="bg-red-600 text-white px-4 py-2 rounded">Añadir</button>
+        <button
+          onClick={addCampaign}
+          className="bg-purple-600 text-white px-4 py-2 rounded"
+        >
+          Añadir
+        </button>
       </div>
       <ul className="list-disc pl-6">
-        {campaigns.map((c, idx) => (<li key={idx}>{c}</li>))}
+        {campaigns.map((c, idx) => (
+          <li key={idx}>{c}</li>
+        ))}
       </ul>
     </div>
   );
