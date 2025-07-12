@@ -1,27 +1,28 @@
+'use client';
 import { useState } from 'react';
-import axios from 'axios';
 
 export default function IAGenerator() {
-  const [prompt, setPrompt] = useState('');
-  const [result, setResult] = useState('');
+  const [input, setInput] = useState('');
+  const [output, setOutput] = useState('');
 
-  const handleGenerate = async () => {
-    const res = await axios.post('/api/ai/generate', { prompt });
-    setResult(res.data.result);
+  const simulateIA = () => {
+    setOutput(`Contenido optimizado por IA para: "${input}"`);
   };
 
   return (
-    <div className="p-4 bg-white shadow rounded-xl">
+    <div className="bg-white p-6 rounded shadow">
+      <h2 className="text-xl font-bold mb-4">Generador IA de Contenido</h2>
       <input
-        className="w-full p-2 border"
-        placeholder="Escribe una idea para generar contenido..."
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
+        type="text"
+        className="border p-2 w-full mb-2"
+        placeholder="Ingresa una palabra clave"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
       />
-      <button onClick={handleGenerate} className="mt-2 bg-blue-500 text-white px-4 py-2 rounded">
-        Generar
+      <button onClick={simulateIA} className="bg-indigo-600 text-white px-4 py-2 rounded">
+        Generar Contenido
       </button>
-      {result && <p className="mt-4 p-2 bg-gray-100 rounded">{result}</p>}
+      <div className="mt-4 text-sm text-gray-700">{output}</div>
     </div>
   );
 }
