@@ -1,34 +1,23 @@
-'use client'
+'use client';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
 
-import React from 'react'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-
-const AnimatedLogo = () => {
+export default function AnimatedLogo() {
   return (
     <motion.div
-      className="fixed top-4 left-4 z-50 pointer-events-none"
-      initial={{ y: -20, opacity: 0 }}
-      animate={{
-        y: [0, -10, 0],
-        opacity: 1,
-        transition: {
-          duration: 4,
-          repeat: Infinity,
-          repeatType: 'mirror',
-        },
-      }}
+      initial={{ opacity: 0, scale: 0.6 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1.2, ease: 'easeOut' }}
+      className="w-48 h-48 mx-auto mt-4"
     >
       <Image
-        src="/imagenes/logo.jpg"
-        alt="Logo"
-        width={120}
-        height={120}
-        className="rounded-full drop-shadow-xl"
+        src="/images/Logo.jpg"
+        alt="AQUAZONE Logo"
+        width={300}
+        height={300}
+        className="rounded-full shadow-xl"
         priority
       />
     </motion.div>
-  )
+  );
 }
-
-export default AnimatedLogo
