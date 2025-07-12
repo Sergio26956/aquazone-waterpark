@@ -2,53 +2,31 @@
 import { useState } from 'react';
 
 export default function SocialVisualGenerator() {
-  const [event, setEvent] = useState('');
-  const [style, setStyle] = useState('');
-  const [result, setResult] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [idea, setIdea] = useState('');
+  const [visual, setVisual] = useState('');
 
-  async function handleGenerate(e) {
-    e.preventDefault();
-    setLoading(true);
-    const res = await fetch('/api/media-visual', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event, style }),
-    });
-    const data = await res.json();
-    setResult(data.visual);
-    setLoading(false);
-  }
+  const generateVisual = () => {
+    if (!idea.trim()) return;
+    setVisual(`🖼️ Visual generado para campaña: "${idea}"`);
+  };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md max-w-xl mx-auto mt-8">
-      <h2 className="text-2xl font-bold text-center mb-4">Generador Visual IA para Redes</h2>
-      <form onSubmit={handleGenerate} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Nombre del evento"
-          className="w-full p-2 border rounded"
-          value={event}
-          onChange={(e) => setEvent(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Estilo (divertido, moderno, acuático...)"
-          className="w-full p-2 border rounded"
-          value={style}
-          onChange={(e) => setStyle(e.target.value)}
-          required
-        />
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-          Generar Visual
-        </button>
-      </form>
-      {loading ? (
-        <p className="mt-4 text-sm">Generando...</p>
-      ) : (
-        <p className="mt-4 text-sm whitespace-pre-line">{result}</p>
-      )}
+    <div className="p-4 bg-white rounded shadow">
+      <h2 className="text-xl font-bold mb-2">Generador Visual para Redes</h2>
+      <input
+        type="text"
+        className="border p-2 w-full mb-2"
+        placeholder="Ej. Promoción de verano"
+        value={idea}
+        onChange={(e) => setIdea(e.target.value)}
+      />
+      <button
+        onClick={generateVisual}
+        className="bg-pink-600 text-white px-4 py-2 rounded"
+      >
+        Generar Visual
+      </button>
+      <div className="mt-4 text-gray-700">{visual}</div>
     </div>
   );
 }
