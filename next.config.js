@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    domains: ['your-domain.com'], // Cambiar si usas imágenes externas
+  i18n: {
+    locales: ['es', 'en', 'fr', 'de', 'pt'],
+    defaultLocale: 'es',
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
