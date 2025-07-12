@@ -1,20 +1,32 @@
-'use client'
-
-import React from 'react'
-import { FaInstagram, FaFacebookF, FaWhatsapp } from 'react-icons/fa'
+'use client';
+import { useState } from 'react';
 
 export default function SocialTabs() {
+  const [active, setActive] = useState('instagram');
+
   return (
-    <div className="fixed left-4 top-1/3 z-50 flex flex-col space-y-3">
-      <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-        <FaInstagram className="text-white text-2xl hover:text-pink-500 transition" />
-      </a>
-      <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
-        <FaFacebookF className="text-white text-2xl hover:text-blue-500 transition" />
-      </a>
-      <a href="https://wa.me/34600000000" target="_blank" rel="noopener noreferrer">
-        <FaWhatsapp className="text-white text-2xl hover:text-green-500 transition" />
-      </a>
+    <div className="bg-white p-4 rounded shadow mt-6">
+      <div className="flex gap-4 mb-4">
+        <button onClick={() => setActive('instagram')} className="btn">Instagram</button>
+        <button onClick={() => setActive('facebook')} className="btn">Facebook</button>
+        <button onClick={() => setActive('tiktok')} className="btn">TikTok</button>
+      </div>
+
+      {active === 'instagram' && (
+        <iframe
+          src="https://www.instagram.com/aquazonewaterpark/embed"
+          className="w-full h-80 border"
+        />
+      )}
+      {active === 'facebook' && (
+        <iframe
+          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Faquazonewaterpark&tabs=timeline&width=500&height=400"
+          className="w-full h-80 border"
+        />
+      )}
+      {active === 'tiktok' && (
+        <div className="text-center p-8 text-gray-600">🔗 TikTok API coming soon…</div>
+      )}
     </div>
-  )
+  );
 }
