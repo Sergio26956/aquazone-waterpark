@@ -1,38 +1,54 @@
 'use client';
 import { useState } from 'react';
 
+interface Campaign {
+  id: number;
+  title: string;
+  description: string;
+}
+
 export default function CampaignManager() {
-  const [campaigns, setCampaigns] = useState<string[]>([]);
-  const [input, setInput] = useState('');
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [form, setForm] = useState({ title: '', description: '' });
 
   const addCampaign = () => {
-    if (input.trim()) {
-      setCampaigns([...campaigns, input]);
-      setInput('');
+    if (form.title.trim() !== '') {
+      setCampaigns([...campaigns, { id: Date.now(), ...form }]);
+      setForm({ title: '', description: '' });
     }
   };
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-2">Gestor de Campañas</h3>
-      <div className="flex gap-2 mb-4">
+      <h3 className="text-2xl font-bold mb-4">Gestor de Campañas</h3>
+      <div className="mb-4 space-y-2">
         <input
           type="text"
-          className="border p-2 flex-1"
-          placeholder="Nueva campaña"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          placeholder="Título de la campaña"
+          className="border p-2 rounded w-full"
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
+        />
+        <textarea
+          placeholder="Descripción"
+          className="border p-2 rounded w-full"
+          rows={4}
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
         <button
+          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
           onClick={addCampaign}
-          className="bg-purple-600 text-white px-4 py-2 rounded"
         >
-          Añadir
+          Añadir Campaña
         </button>
       </div>
-      <ul className="list-disc pl-6">
-        {campaigns.map((c, idx) => (
-          <li key={idx}>{c}</li>
+
+      <ul className="divide-y divide-gray-300">
+        {campaigns.map(({ id, title, description }) => (
+          <li key={id} className="py-2">
+            <strong>{title}</strong>: {description}
+          </li>
         ))}
       </ul>
     </div>
