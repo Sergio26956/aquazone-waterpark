@@ -1,38 +1,62 @@
 'use client';
 import { useState } from 'react';
 
+interface Contact {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+}
+
 export default function ContactList() {
-  const [contacts, setContacts] = useState<string[]>([]);
-  const [input, setInput] = useState('');
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [form, setForm] = useState({ name: '', email: '', phone: '' });
 
   const addContact = () => {
-    if (input.trim()) {
-      setContacts([...contacts, input]);
-      setInput('');
+    if (form.name && form.email) {
+      setContacts([...contacts, { id: Date.now(), ...form }]);
+      setForm({ name: '', email: '', phone: '' });
     }
   };
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-2">Agenda de Contactos</h3>
-      <div className="flex gap-2 mb-4">
+      <h3 className="text-2xl font-bold mb-4">Lista de Contactos</h3>
+      <div className="mb-4 space-y-2">
         <input
           type="text"
-          className="border p-2 flex-1"
-          placeholder="Ej. contacto@correo.com"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          placeholder="Nombre"
+          className="border p-2 rounded w-full"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          className="border p-2 rounded w-full"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+        <input
+          type="tel"
+          placeholder="Teléfono"
+          className="border p-2 rounded w-full"
+          value={form.phone}
+          onChange={(e) => setForm({ ...form, phone: e.target.value })}
         />
         <button
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
           onClick={addContact}
-          className="bg-green-600 text-white px-4 py-2 rounded"
         >
-          Añadir
+          Añadir Contacto
         </button>
       </div>
-      <ul className="list-disc pl-6">
-        {contacts.map((c, idx) => (
-          <li key={idx}>{c}</li>
+
+      <ul className="divide-y divide-gray-300">
+        {contacts.map(({ id, name, email, phone }) => (
+          <li key={id} className="py-2">
+            <strong>{name}</strong> — {email} — {phone}
+          </li>
         ))}
       </ul>
     </div>
