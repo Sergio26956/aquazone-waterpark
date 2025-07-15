@@ -1,48 +1,29 @@
 'use client';
 import { useState } from 'react';
 import Calendar from './Calendar';
+import CampaignManager from './CampaingManager';
+import BudgetManager from './Presupuestos';
 import ContactList from './ContactList';
-import CampaignManager from './CampaignManager';
-import BudgetManager from './BudgetManager';
+import SocialVisualGenerator from './SocialVisualGenerator'; // NUEVO
 
 export default function AdminPanel() {
-  const [section, setSection] = useState<'calendar' | 'contacts' | 'campaigns' | 'budgets'>('calendar');
+  const [section, setSection] = useState('calendar');
 
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-6">
-      <nav className="flex gap-4 mb-6">
-        <button
-          className={`btn ${section === 'calendar' ? 'btn-active' : ''}`}
-          onClick={() => setSection('calendar')}
-        >
-          Calendario
-        </button>
-        <button
-          className={`btn ${section === 'contacts' ? 'btn-active' : ''}`}
-          onClick={() => setSection('contacts')}
-        >
-          Contactos
-        </button>
-        <button
-          className={`btn ${section === 'campaigns' ? 'btn-active' : ''}`}
-          onClick={() => setSection('campaigns')}
-        >
-          Campañas
-        </button>
-        <button
-          className={`btn ${section === 'budgets' ? 'btn-active' : ''}`}
-          onClick={() => setSection('budgets')}
-        >
-          Presupuestos
-        </button>
+    <div className="p-6 space-y-6">
+      <nav className="flex gap-4 flex-wrap">
+        <button onClick={() => setSection('calendar')} className="btn">Calendario</button>
+        <button onClick={() => setSection('contacts')} className="btn">Contactos</button>
+        <button onClick={() => setSection('campaigns')} className="btn">Campañas</button>
+        <button onClick={() => setSection('budgets')} className="btn">Presupuestos</button>
+        <button onClick={() => setSection('visual')} className="btn">Visual IA</button> {/* NUEVO */}
       </nav>
 
-      <section>
-        {section === 'calendar' && <Calendar />}
-        {section === 'contacts' && <ContactList />}
-        {section === 'campaigns' && <CampaignManager />}
-        {section === 'budgets' && <BudgetManager />}
-      </section>
+      {section === 'calendar' && <Calendar />}
+      {section === 'contacts' && <ContactList />}
+      {section === 'campaigns' && <CampaignManager />}
+      {section === 'budgets' && <BudgetManager />}
+      {section === 'visual' && <SocialVisualGenerator />} {/* NUEVO */}
     </div>
   );
 }
