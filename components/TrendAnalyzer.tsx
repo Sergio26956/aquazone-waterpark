@@ -1,70 +1,58 @@
 'use client';
-
 import { useState } from 'react';
-import { TrendIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function TrendAnalyzer() {
-  const [input, setInput] = useState('');
-  const [trends, setTrends] = useState<string[]>([]);
+  const [topic, setTopic] = useState('');
+  const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const analyzeTrends = async () => {
-    if (!input.trim()) return;
-
+  const analyzeTrend = async () => {
     setLoading(true);
+    setResult('');
     try {
-      const res = await fetch('/api/trends', {
+      const response = await fetch('/api/analyze-trend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ topic: input }),
+        body: JSON.stringify({ topic }),
       });
-
-      const data = await res.json();
-      setTrends(data.trends || []);
+      const data = await response.json();
+      setResult(data.trend || 'No se encontraron tendencias.');
     } catch (error) {
-      console.error('Error al analizar tendencias', error);
+      setResult('Error al analizar tendencias.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <TrendIcon />
-        <h2 className="text-xl font-bold">Análisis de Tendencias con IA</h2>
-      </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white p-6 rounded shadow space-y-4"
+    >
+      <h3 className="text-2xl font-bold">Analizador de Tendencias</h3>
       <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Escribe un tema o palabra clave"
-        className="border px-4 py-2 w-full rounded mb-4"
+        type="text"
+        placeholder="Tema o palabra clave (ej. parques acuáticos)"
+        className="w-full border p-2 rounded"
+        value={topic}
+        onChange={(e) => setTopic(e.target.value)}
       />
       <button
-        onClick={analyzeTrends}
-        disabled={loading}
-        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded transition"
+        onClick={analyzeTrend}
+        className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
       >
-        {loading ? 'Analizando...' : 'Analizar'}
+        Analizar
       </button>
-
-      <div className="mt-6">
-        {trends.length > 0 && (
-          <ul className="list-disc pl-6 space-y-2">
-            {trends.map((t, i) => (
-              <motion.li
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                {t}
-              </motion.li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
+      {loading && <p>Analizando...</p>}
+      {result && (
+        <div className="mt-4 bg-gray-100 p-4 rounded border">
+          <strong>Resultado:</strong>
+          <p>{result}</p>
+        </div>
+      )}
+    </motion.div>
   );
 }
