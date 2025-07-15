@@ -1,36 +1,35 @@
 'use client';
 import { useState } from 'react';
 
-interface Budget {
+interface Presupuesto {
   cliente: string;
   concepto: string;
-  precio: number;
+  importe: string;
 }
 
 export default function BudgetManager() {
-  const [budgets, setBudgets] = useState<Budget[]>([]);
+  const [presupuestos, setPresupuestos] = useState<Presupuesto[]>([]);
   const [cliente, setCliente] = useState('');
   const [concepto, setConcepto] = useState('');
-  const [precio, setPrecio] = useState('');
+  const [importe, setImporte] = useState('');
 
-  const addBudget = () => {
-    const parsedPrice = parseFloat(precio);
-    if (cliente && concepto && !isNaN(parsedPrice)) {
-      const newBudget: Budget = { cliente, concepto, precio: parsedPrice };
-      setBudgets([...budgets, newBudget]);
+  const agregarPresupuesto = () => {
+    if (cliente && concepto && importe) {
+      const nuevo: Presupuesto = { cliente, concepto, importe };
+      setPresupuestos([...presupuestos, nuevo]);
       setCliente('');
       setConcepto('');
-      setPrecio('');
+      setImporte('');
     }
   };
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-2">Gestor de Presupuestos</h3>
+      <h3 className="text-xl font-bold mb-4">Gestor de Presupuestos</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <input
           type="text"
-          placeholder="Nombre del cliente"
+          placeholder="Cliente"
           className="border p-2 rounded"
           value={cliente}
           onChange={(e) => setCliente(e.target.value)}
@@ -43,24 +42,26 @@ export default function BudgetManager() {
           onChange={(e) => setConcepto(e.target.value)}
         />
         <input
-          type="number"
-          placeholder="Precio (€)"
+          type="text"
+          placeholder="Importe (€)"
           className="border p-2 rounded"
-          value={precio}
-          onChange={(e) => setPrecio(e.target.value)}
+          value={importe}
+          onChange={(e) => setImporte(e.target.value)}
         />
       </div>
       <button
-        onClick={addBudget}
+        onClick={agregarPresupuesto}
         className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
       >
-        Añadir presupuesto
+        Añadir Presupuesto
       </button>
 
       <ul className="mt-6 space-y-2">
-        {budgets.map((b, idx) => (
+        {presupuestos.map((p, idx) => (
           <li key={idx} className="bg-white p-4 rounded shadow">
-            <strong>{b.cliente}</strong> — {b.concepto} — <span className="text-green-700 font-semibold">{b.precio.toFixed(2)} €</span>
+            <strong>{p.cliente}</strong><br />
+            {p.concepto}<br />
+            💶 {p.importe}
           </li>
         ))}
       </ul>
