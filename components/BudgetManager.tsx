@@ -1,45 +1,62 @@
 'use client';
 import { useState } from 'react';
 
-type Budget = {
+interface Budget {
   id: number;
   client: string;
-  amount: number;
-  details: string;
-};
+  amount: string;
+  description: string;
+}
 
 export default function BudgetManager() {
   const [budgets, setBudgets] = useState<Budget[]>([]);
-  const [client, setClient] = useState('');
-  const [amount, setAmount] = useState('');
-  const [details, setDetails] = useState('');
+  const [form, setForm] = useState({ client: '', amount: '', description: '' });
 
-  function addBudget() {
-    if (!client || !amount) return;
-    const newBudget: Budget = {
-      id: Date.now(),
-      client,
-      amount: Number(amount),
-      details,
-    };
-    setBudgets((prev) => [...prev, newBudget]);
-    setClient(''); setAmount(''); setDetails('');
-  }
+  const addBudget = () => {
+    if (form.client.trim() && form.amount.trim()) {
+      setBudgets([...budgets, { id: Date.now(), ...form }]);
+      setForm({ client: '', amount: '', description: '' });
+    }
+  };
 
   return (
-    <div className="max-w-xl mx-auto p-4 bg-white rounded shadow">
-      <h2 className="text-xl font-bold mb-4 text-center">Gestor de Presupuestos</h2>
-      <div className="space-y-2 mb-4">
-        <input type="text" placeholder="Cliente" value={client} onChange={(e) => setClient(e.target.value)} className="w-full p-2 border rounded" />
-        <input type="number" placeholder="Importe (€)" value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full p-2 border rounded" />
-        <textarea placeholder="Detalles" value={details} onChange={(e) => setDetails(e.target.value)} className="w-full p-2 border rounded" />
-        <button onClick={addBudget} className="w-full bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700">Crear Presupuesto</button>
+    <div>
+      <h3 className="text-2xl font-bold mb-4">Gestor de Presupuestos</h3>
+      <div className="mb-4 space-y-2">
+        <input
+          type="text"
+          placeholder="Cliente"
+          className="border p-2 rounded w-full"
+          value={form.client}
+          onChange={(e) => setForm({ ...form, client: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Monto"
+          className="border p-2 rounded w-full"
+          value={form.amount}
+          onChange={(e) => setForm({ ...form, amount: e.target.value })}
+        />
+        <textarea
+          placeholder="Descripción"
+          className="border p-2 rounded w-full"
+          rows={3}
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
+        />
+        <button
+          className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700"
+          onClick={addBudget}
+        >
+          Añadir Presupuesto
+        </button>
       </div>
-      <ul className="max-h-60 overflow-auto border rounded p-2">
-        {budgets.map((b) => (
-          <li key={b.id} className="border-b py-2">
-            <strong>{b.client}</strong> – €{b.amount}<br />
-            <span className="text-sm">{b.details}</span>
+
+      <ul className="divide-y divide-gray-300">
+        {budgets.map(({ id, client, amount, description }) => (
+          <li key={id} className="py-2">
+            <strong>{client}</strong> — {amount} <br />
+            <em>{description}</em>
           </li>
         ))}
       </ul>
