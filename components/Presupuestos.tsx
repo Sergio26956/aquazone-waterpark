@@ -1,53 +1,60 @@
 'use client';
 import { useState } from 'react';
 
+interface Budget {
+  client: string;
+  amount: number;
+  description: string;
+}
+
 export default function BudgetManager() {
-  const [budgets, setBudgets] = useState<{ cliente: string; detalle: string; precio: string }[]>([]);
-  const [cliente, setCliente] = useState('');
-  const [detalle, setDetalle] = useState('');
-  const [precio, setPrecio] = useState('');
+  const [budgets, setBudgets] = useState<Budget[]>([]);
+  const [client, setClient] = useState('');
+  const [amount, setAmount] = useState<number>(0);
+  const [description, setDescription] = useState('');
 
   const addBudget = () => {
-    if (cliente && detalle && precio) {
-      setBudgets([...budgets, { cliente, detalle, precio }]);
-      setCliente('');
-      setDetalle('');
-      setPrecio('');
+    if (client && amount && description) {
+      setBudgets([...budgets, { client, amount, description }]);
+      setClient('');
+      setAmount(0);
+      setDescription('');
     }
   };
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-2">Presupuestos</h3>
-      <div className="grid grid-cols-3 gap-2 mb-4">
+      <h3 className="text-xl font-bold mb-2">Presupuestos y Contratos</h3>
+      <div className="space-y-2 mb-4">
         <input
           type="text"
+          className="border p-2 w-full"
           placeholder="Cliente"
-          value={cliente}
-          onChange={(e) => setCliente(e.target.value)}
-          className="border p-2 rounded"
+          value={client}
+          onChange={(e) => setClient(e.target.value)}
         />
         <input
-          type="text"
-          placeholder="Detalle"
-          value={detalle}
-          onChange={(e) => setDetalle(e.target.value)}
-          className="border p-2 rounded"
+          type="number"
+          className="border p-2 w-full"
+          placeholder="Importe (€)"
+          value={amount}
+          onChange={(e) => setAmount(Number(e.target.value))}
         />
-        <input
-          type="text"
-          placeholder="Precio (€)"
-          value={precio}
-          onChange={(e) => setPrecio(e.target.value)}
-          className="border p-2 rounded"
+        <textarea
+          className="border p-2 w-full"
+          placeholder="Descripción del presupuesto o contrato"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
+        <button onClick={addBudget} className="bg-purple-600 text-white px-4 py-2 rounded">
+          Guardar
+        </button>
       </div>
-      <button onClick={addBudget} className="bg-purple-600 text-white px-4 py-2 rounded mb-4">
-        Añadir Presupuesto
-      </button>
       <ul className="list-disc pl-6">
-        {budgets.map((b, i) => (
-          <li key={i}>{b.cliente} - {b.detalle} - {b.precio}€</li>
+        {budgets.map((b, idx) => (
+          <li key={idx}>
+            <strong>{b.client}</strong> - €{b.amount} - {b.description}
+          </li>
         ))}
       </ul>
     </div>
