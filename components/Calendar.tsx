@@ -6,31 +6,28 @@ export default function Calendar() {
   const [input, setInput] = useState('');
 
   const addEvent = () => {
-    if (input.trim() !== '') {
-      setEvents([...events, input.trim()]);
+    if (input.trim()) {
+      setEvents([...events, input]);
       setInput('');
     }
   };
 
   return (
     <div>
-      <h3 className="text-2xl font-bold mb-4">Calendario de Reservas</h3>
+      <h3 className="text-xl font-bold mb-2">Calendario de Reservas</h3>
       <div className="flex gap-2 mb-4">
         <input
           type="text"
-          className="border p-2 rounded flex-1"
+          className="border p-2 flex-1 rounded"
           placeholder="Nueva fecha o evento"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          onClick={addEvent}
-        >
+        <button onClick={addEvent} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
           Añadir
         </button>
       </div>
-      <ul className="list-disc pl-6 space-y-1">
+      <ul className="list-disc pl-6">
         {events.map((ev, idx) => (
           <li key={idx}>{ev}</li>
         ))}
