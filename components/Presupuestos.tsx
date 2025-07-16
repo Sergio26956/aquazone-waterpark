@@ -1,76 +1,49 @@
 'use client';
 import { useState } from 'react';
-
-interface Budget {
-  id: number;
-  clientName: string;
-  amount: number;
-  status: 'pendiente' | 'aprobado' | 'rechazado';
-}
+import jsPDF from 'jspdf';
 
 export default function BudgetManager() {
-  const [budgets, setBudgets] = useState<Budget[]>([]);
-  const [clientName, setClientName] = useState('');
-  const [amount, setAmount] = useState('');
+  const [client, setClient] = useState('');
+  const [details, setDetails] = useState('');
+  const [price, setPrice] = useState('');
 
-  const addBudget = () => {
-    const parsedAmount = parseFloat(amount);
-    if (clientName.trim() && !isNaN(parsedAmount) && parsedAmount > 0) {
-      setBudgets([
-        ...budgets,
-        { id: Date.now(), clientName, amount: parsedAmount, status: 'pendiente' },
-      ]);
-      setClientName('');
-      setAmount('');
-    }
-  };
-
-  const updateStatus = (id: number, status: Budget['status']) => {
-    setBudgets(
-      budgets.map((b) => (b.id === id ? { ...b, status } : b))
-    );
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Presupuesto AQUAZONE', 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Cliente: ${client}`, 20, 40);
+    doc.text(`Descripción: ${details}`, 20, 50);
+    doc.text(`Precio: ${price} €`, 20, 60);
+    doc.save(`Presupuesto-${client}.pdf`);
   };
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-2">Gestor de Presupuestos</h3>
-      <div className="flex flex-col gap-2 mb-4 max-w-md">
-        <input
-          type="text"
-          placeholder="Nombre del cliente"
-          value={clientName}
-          onChange={(e) => setClientName(e.target.value)}
-          className="border p-2 rounded"
-        />
-        <input
-          type="number"
-          placeholder="Importe (€)"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="border p-2 rounded"
-          min="0"
-          step="0.01"
-        />
-        <button onClick={addBudget} className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">
-          Añadir presupuesto
-        </button>
-      </div>
-      <ul className="list-disc pl-6">
-        {budgets.map((budget) => (
-          <li key={budget.id} className="mb-1">
-            <span className="font-semibold">{budget.clientName}</span> — {budget.amount.toFixed(2)}€ —{' '}
-            <select
-              value={budget.status}
-              onChange={(e) => updateStatus(budget.id, e.target.value as Budget['status'])}
-              className="border rounded px-2 py-1"
-            >
-              <option value="pendiente">Pendiente</option>
-              <option value="aprobado">Aprobado</option>
-              <option value="rechazado">Rechazado</option>
-            </select>
-          </li>
-        ))}
-      </ul>
+      <h3 className="text-xl font-bold mb-4">Generador de Presupuestos</h3>
+      <input
+        className="w-full p-2 border rounded mb-2"
+        placeholder="Nombre del cliente"
+        value={client}
+        onChange={(e) => setClient(e.target.value)}
+      />
+      <textarea
+        className="w-full p-2 border rounded mb-2"
+        placeholder="Descripción del servicio"
+        rows={4}
+        value={details}
+        onChange={(e) => setDetails(e.target.value)}
+      />
+      <input
+        className="w-full p-2 border rounded mb-4"
+        placeholder="Precio (€)"
+        type="number"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+      />
+      <button onClick={generatePDF} className="bg-purple-600 text-white px-4 py-2 rounded">
+        Generar PDF
+      </button>
     </div>
   );
 }
