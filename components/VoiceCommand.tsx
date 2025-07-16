@@ -1,24 +1,19 @@
+'use client';
 import { useEffect } from 'react';
 
 export default function VoiceCommand() {
   useEffect(() => {
-    const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
-    if (!SpeechRecognition) return;
-
-    const recognition = new SpeechRecognition();
-    recognition.continuous = true;
+    const recognition = new (window as any).webkitSpeechRecognition();
     recognition.lang = 'es-ES';
+    recognition.continuous = true;
+    recognition.interimResults = false;
 
     recognition.onresult = (event: any) => {
-      const transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
-      if (transcript.includes('galería')) window.location.href = '/galeria';
-      if (transcript.includes('inicio')) window.location.href = '/';
-      if (transcript.includes('contacto')) window.location.href = '/contacto';
+      const transcript = event.results[event.results.length - 1][0].transcript.trim();
+      alert('Comando de voz recibido: ' + transcript);
     };
 
     recognition.start();
-
-    return () => recognition.stop();
   }, []);
 
   return null;
