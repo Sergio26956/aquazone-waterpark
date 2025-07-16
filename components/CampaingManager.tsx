@@ -1,64 +1,66 @@
 'use client';
 import { useState } from 'react';
 
-interface Campaña {
-  titulo: string;
-  mensaje: string;
-  tipo: 'email' | 'redes';
+interface Campaign {
+  id: number;
+  name: string;
+  description: string;
+  active: boolean;
 }
 
 export default function CampaignManager() {
-  const [campañas, setCampañas] = useState<Campaña[]>([]);
-  const [titulo, setTitulo] = useState('');
-  const [mensaje, setMensaje] = useState('');
-  const [tipo, setTipo] = useState<'email' | 'redes'>('email');
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
 
-  const crearCampaña = () => {
-    if (titulo && mensaje) {
-      setCampañas([...campañas, { titulo, mensaje, tipo }]);
-      setTitulo('');
-      setMensaje('');
+  const addCampaign = () => {
+    if (name.trim() && description.trim()) {
+      setCampaigns([...campaigns, { id: Date.now(), name, description, active: true }]);
+      setName('');
+      setDescription('');
     }
+  };
+
+  const toggleActive = (id: number) => {
+    setCampaigns(
+      campaigns.map((c) => (c.id === id ? { ...c, active: !c.active } : c))
+    );
   };
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-4">Gestión de Campañas</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <h3 className="text-xl font-bold mb-2">Gestor de Campañas</h3>
+      <div className="flex flex-col gap-2 mb-4 max-w-md">
         <input
           type="text"
-          placeholder="Título de campaña"
+          placeholder="Nombre de la campaña"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="border p-2 rounded"
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
         />
-        <select
-          className="border p-2 rounded"
-          value={tipo}
-          onChange={(e) => setTipo(e.target.value as 'email' | 'redes')}
-        >
-          <option value="email">Email</option>
-          <option value="redes">Redes Sociales</option>
-        </select>
         <textarea
-          placeholder="Mensaje"
+          placeholder="Descripción"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           className="border p-2 rounded"
-          value={mensaje}
-          onChange={(e) => setMensaje(e.target.value)}
+          rows={3}
         />
+        <button onClick={addCampaign} className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+          Añadir campaña
+        </button>
       </div>
-      <button
-        onClick={crearCampaña}
-        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-      >
-        Crear Campaña
-      </button>
-
-      <ul className="mt-6 space-y-2">
-        {campañas.map((c, idx) => (
-          <li key={idx} className="bg-white p-4 rounded shadow">
-            <strong>{c.titulo}</strong> <span className="text-sm text-gray-600">({c.tipo})</span>
-            <p className="mt-2">{c.mensaje}</p>
+      <ul className="list-disc pl-6">
+        {campaigns.map((campaign) => (
+          <li key={campaign.id} className="mb-1">
+            <span className="font-semibold">{campaign.name}</span> — {campaign.description} —{' '}
+            <button
+              onClick={() => toggleActive(campaign.id)}
+              className={`px-2 py-1 rounded text-white ${
+                campaign.active ? 'bg-green-600' : 'bg-red-600'
+              }`}
+            >
+              {campaign.active ? 'Activa' : 'Inactiva'}
+            </button>
           </li>
         ))}
       </ul>
