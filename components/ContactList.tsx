@@ -1,67 +1,61 @@
 'use client';
 import { useState } from 'react';
 
-interface Contacto {
-  nombre: string;
+interface Contact {
+  id: number;
+  name: string;
   email: string;
-  telefono: string;
+  phone?: string;
 }
 
 export default function ContactList() {
-  const [contactos, setContactos] = useState<Contacto[]>([]);
-  const [nombre, setNombre] = useState('');
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [telefono, setTelefono] = useState('');
+  const [phone, setPhone] = useState('');
 
-  const agregarContacto = () => {
-    if (nombre && email && telefono) {
-      const nuevo: Contacto = { nombre, email, telefono };
-      setContactos([...contactos, nuevo]);
-      setNombre('');
+  const addContact = () => {
+    if (name.trim() && email.trim()) {
+      setContacts([...contacts, { id: Date.now(), name, email, phone }]);
+      setName('');
       setEmail('');
-      setTelefono('');
+      setPhone('');
     }
   };
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-2">Agenda de Contactos</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <h3 className="text-xl font-bold mb-2">Lista de Contactos</h3>
+      <div className="flex flex-col gap-2 mb-4 max-w-md">
         <input
           type="text"
           placeholder="Nombre"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="border p-2 rounded"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
         />
         <input
           type="email"
-          placeholder="Email"
-          className="border p-2 rounded"
+          placeholder="Correo electrónico"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="border p-2 rounded"
         />
         <input
           type="tel"
-          placeholder="Teléfono"
+          placeholder="Teléfono (opcional)"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           className="border p-2 rounded"
-          value={telefono}
-          onChange={(e) => setTelefono(e.target.value)}
         />
+        <button onClick={addContact} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+          Añadir contacto
+        </button>
       </div>
-      <button
-        onClick={agregarContacto}
-        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-      >
-        Añadir contacto
-      </button>
-
-      <ul className="mt-6 space-y-2">
-        {contactos.map((c, idx) => (
-          <li key={idx} className="bg-white p-4 rounded shadow">
-            <strong>{c.nombre}</strong><br />
-            📧 {c.email}<br />
-            📞 {c.telefono}
+      <ul className="list-disc pl-6">
+        {contacts.map((contact) => (
+          <li key={contact.id}>
+            <strong>{contact.name}</strong> — {contact.email} {contact.phone && `— ${contact.phone}`}
           </li>
         ))}
       </ul>
