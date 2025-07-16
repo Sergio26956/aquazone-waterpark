@@ -1,3 +1,3 @@
-export function validarCredenciales(email: string, password: string) {
-  return email === 'admin@aquazone.com' && password === 'admin123';
+export function verifyPassword(password: string) {
+  return password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 }
