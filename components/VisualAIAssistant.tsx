@@ -3,31 +3,33 @@ import { useState } from 'react';
 
 export default function VisualAIAssistant() {
   const [prompt, setPrompt] = useState('');
-  const [result, setResult] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
   const generateImage = async () => {
-    if (!prompt.trim()) return;
-    setResult('Generando imagen...');
-    // Simula una llamada a un generador IA
-    setTimeout(() => {
-      setResult(`✅ Imagen generada a partir del prompt: "${prompt}"`);
-    }, 2000);
+    const res = await fetch('/api/dalle', {
+      method: 'POST',
+      body: JSON.stringify({ prompt }),
+    });
+    const data = await res.json();
+    setImageUrl(data.url);
   };
 
   return (
-    <div className="p-4 bg-white rounded shadow">
-      <h2 className="text-xl font-bold mb-2">Asistente Visual IA</h2>
+    <div className="p-4 max-w-lg mx-auto bg-white shadow rounded">
+      <h3 className="text-lg font-bold mb-2">Generador Visual AI (DALL·E)</h3>
       <input
-        type="text"
-        className="border p-2 w-full mb-2"
-        placeholder="Describe la imagen que deseas"
+        className="w-full border p-2 rounded mb-2"
+        placeholder="Describe la imagen..."
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
       />
-      <button onClick={generateImage} className="bg-blue-600 text-white px-4 py-2 rounded">
+      <button
+        onClick={generateImage}
+        className="bg-green-600 text-white px-4 py-2 rounded"
+      >
         Generar Imagen
       </button>
-      <p className="mt-4">{result}</p>
+      {imageUrl && <img src={imageUrl} alt="Imagen AI" className="mt-4 rounded" />}
     </div>
   );
 }
