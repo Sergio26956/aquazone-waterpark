@@ -1,14 +1,15 @@
 'use client';
-import { useState } from 'react';
-import AdminLogin from '@/components/AdminLogin';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import AdminPanel from '@/components/AdminPanel';
 
 export default function AdminPage() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const router = useRouter();
 
-  return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4">
-      {!loggedIn ? <AdminLogin onLogin={() => setLoggedIn(true)} /> : <AdminPanel />}
-    </div>
-  );
+  useEffect(() => {
+    const isAuth = localStorage.getItem('admin_auth');
+    if (!isAuth) router.push('/admin-login');
+  }, [router]);
+
+  return <AdminPanel />;
 }
