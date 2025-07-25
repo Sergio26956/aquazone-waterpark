@@ -1,49 +1,37 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
-const WHATSAPP_NUMBER = '+34666111222'; // Cambia por tu número real
-const DEFAULT_MESSAGE = 'Hola, estoy interesado en sus parques acuáticos.';
+import { useState, useEffect } from 'react';
 
 export default function WhatsAppFloatingButton() {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > 100);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const timer = setTimeout(() => setIsVisible(true), 2000);
+    return () => clearTimeout(timer);
   }, []);
 
-  const url = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, '')}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`;
+  const phoneNumber = '34649002658'; // Cambia por tu número real con código país sin +
+  const message = encodeURIComponent('Hola, quiero información sobre AQUAZONE WaterPark');
+
+  if (!isVisible) return null;
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 50 }}
-          transition={{ duration: 0.5 }}
-          className="fixed bottom-6 right-6 bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-lg z-50"
-          aria-label="Chat WhatsApp"
-          title="Contacta por WhatsApp"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-          >
-            <path d="M20.52 3.48A11.92 11.92 0 0012.01 0C5.37 0 .05 5.32.05 11.95a11.82 11.82 0 001.63 6.05L0 24l6.3-1.62a11.94 11.94 0 005.71 1.47c6.64 0 12.01-5.32 12.01-11.95a11.9 11.9 0 00-3.5-8.42zM12 21.45a9.4 9.4 0 01-4.85-1.38l-.35-.21-3.74.97.99-3.64-.23-.37a9.35 9.35 0 1111.57 5.63 9.24 9.24 0 01-3.39.99zm5.07-6.56c-.27-.14-1.6-.79-1.85-.88s-.43-.14-.61.14-.7.88-.86 1.06-.32.21-.6.07a7.92 7.92 0 01-2.33-1.43 8.62 8.62 0 01-1.59-1.97c-.17-.29 0-.44.12-.58s.27-.32.41-.48a.56.56 0 00.19-.31.64.64 0 00-.09-.45c-.27-.67-.78-1.15-1.13-1.56a1.14 1.14 0 01-.1-1.06c.07-.21.61-1.48.84-2.03a.7.7 0 00-.01-.65c-.04-.11-.61-1.48-.85-2.04s-.43-.48-.61-.48-.43-.01-.66-.01a1 1 0 00-.73.34 2.94 2.94 0 00-1 2.23 7.69 7.69 0 001.5 3.68 10.43 10.43 0 005.16 4.42c.72.31 1.28.25 1.76.15a2.56 2.56 0 001.54-1.12 2.79 2.79 0 00.2-1.13c-.02-.19-.08-.31-.27-.44z" />
-          </svg>
-        </motion.a>
-      )}
-    </AnimatePresence>
+    <a
+      href={`https://wa.me/${phoneNumber}?text=${message}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat WhatsApp"
+      className="fixed bottom-6 right-6 z-50 bg-green-600 hover:bg-green-700 text-white rounded-full p-4 shadow-lg transition-transform transform hover:scale-110"
+      style={{ boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}
+    >
+      <svg
+        className="w-6 h-6"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path d="M20.52 3.48a11.944 11.944 0 0 0-17 0c-4.63 4.63-4.63 12.13 0 16.76a11.89 11.89 0 0 0 7.1 3.48v-4.12a1.37 1.37 0 0 0-1.02-1.36 5.98 5.98 0 0 1-2.76-2.15 1.37 1.37 0 0 1 0-1.38l.76-1.16a1.37 1.37 0 0 1 1.15-.59h.12a4.68 4.68 0 0 1 2.62 1.14c.2.17.46.26.73.26.48 0 .94-.24 1.19-.66l.82-1.28a1.37 1.37 0 0 0-.24-1.88z" />
+      </svg>
+    </a>
   );
 }
