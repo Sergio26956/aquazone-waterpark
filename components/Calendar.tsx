@@ -7,7 +7,7 @@ export default function Calendar() {
 
   const addEvent = () => {
     if (input.trim()) {
-      setEvents([...events, input]);
+      setEvents([...events, input.trim()]);
       setInput('');
     }
   };
@@ -27,7 +27,7 @@ export default function Calendar() {
           Añadir
         </button>
       </div>
-      <ul className="list-disc pl-6">
+      <ul className="list-disc pl-6 space-y-1">
         {events.map((ev, idx) => (
           <li key={idx}>{ev}</li>
         ))}
