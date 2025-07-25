@@ -1,63 +1,35 @@
 'use client';
 import { useState } from 'react';
 
-interface Budget {
-  id: number;
-  client: string;
-  amount: string;
-  description: string;
-}
-
 export default function BudgetManager() {
-  const [budgets, setBudgets] = useState<Budget[]>([]);
-  const [form, setForm] = useState({ client: '', amount: '', description: '' });
+  const [budgets, setBudgets] = useState<string[]>([]);
+  const [input, setInput] = useState('');
 
   const addBudget = () => {
-    if (form.client.trim() && form.amount.trim()) {
-      setBudgets([...budgets, { id: Date.now(), ...form }]);
-      setForm({ client: '', amount: '', description: '' });
+    if (input.trim()) {
+      setBudgets([...budgets, input]);
+      setInput('');
     }
   };
 
   return (
     <div>
-      <h3 className="text-2xl font-bold mb-4">Gestor de Presupuestos</h3>
-      <div className="mb-4 space-y-2">
+      <h3 className="text-xl font-bold mb-2">Gestor de Presupuestos</h3>
+      <div className="flex gap-2 mb-4">
         <input
           type="text"
-          placeholder="Cliente"
-          className="border p-2 rounded w-full"
-          value={form.client}
-          onChange={(e) => setForm({ ...form, client: e.target.value })}
+          className="border p-2 flex-1"
+          placeholder="Nuevo presupuesto"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
         />
-        <input
-          type="text"
-          placeholder="Monto"
-          className="border p-2 rounded w-full"
-          value={form.amount}
-          onChange={(e) => setForm({ ...form, amount: e.target.value })}
-        />
-        <textarea
-          placeholder="Descripción"
-          className="border p-2 rounded w-full"
-          rows={3}
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-        />
-        <button
-          className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700"
-          onClick={addBudget}
-        >
-          Añadir Presupuesto
+        <button onClick={addBudget} className="bg-yellow-600 text-white px-4 py-2 rounded">
+          Añadir
         </button>
       </div>
-
-      <ul className="divide-y divide-gray-300">
-        {budgets.map(({ id, client, amount, description }) => (
-          <li key={id} className="py-2">
-            <strong>{client}</strong> — {amount} <br />
-            <em>{description}</em>
-          </li>
+      <ul className="list-disc pl-6">
+        {budgets.map((budget, idx) => (
+          <li key={idx}>{budget}</li>
         ))}
       </ul>
     </div>
