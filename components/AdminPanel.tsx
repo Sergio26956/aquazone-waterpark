@@ -1,47 +1,26 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import Calendar from './Calendar';
-import CampaignManager from './CampaingManager';
-import BudgetManager from './Presupuestos';
+import CampaignManager from './CampaignManager';
+import BudgetManager from './BudgetManager';
 import ContactList from './ContactList';
 
 export default function AdminPanel() {
   const [section, setSection] = useState('calendar');
-  const router = useRouter();
-
-  useEffect(() => {
-    const isAdmin = localStorage.getItem('isAdmin');
-    if (!isAdmin) {
-      router.push('/admin-login');
-    }
-  }, [router]);
 
   return (
     <div className="p-6 space-y-6">
-      <nav className="flex gap-4 mb-6">
-        <button
-          onClick={() => setSection('calendar')}
-          className={`btn ${section === 'calendar' ? 'bg-blue-600 text-white' : ''}`}
-        >
+      <nav className="flex gap-4">
+        <button onClick={() => setSection('calendar')} className="btn">
           Calendario
         </button>
-        <button
-          onClick={() => setSection('contacts')}
-          className={`btn ${section === 'contacts' ? 'bg-blue-600 text-white' : ''}`}
-        >
+        <button onClick={() => setSection('contacts')} className="btn">
           Contactos
         </button>
-        <button
-          onClick={() => setSection('campaigns')}
-          className={`btn ${section === 'campaigns' ? 'bg-blue-600 text-white' : ''}`}
-        >
+        <button onClick={() => setSection('campaigns')} className="btn">
           Campañas
         </button>
-        <button
-          onClick={() => setSection('budgets')}
-          className={`btn ${section === 'budgets' ? 'bg-blue-600 text-white' : ''}`}
-        >
+        <button onClick={() => setSection('budgets')} className="btn">
           Presupuestos
         </button>
       </nav>
