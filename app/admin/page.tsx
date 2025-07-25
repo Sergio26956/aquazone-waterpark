@@ -1,6 +1,12 @@
-import AdminDashboard from '@/components/AdminDashboard'; import { getServerSession } from 'next-auth'; import { redirect } from 'next/navigation';
+'use client'
 
-export default async function AdminPage() { const session = await getServerSession(); if (!session) redirect('/login');
+import { useSession } from 'next-auth/react' import { redirect } from 'next/navigation' import AdminDashboard from '@/components/admin/AdminDashboard'
 
-return <AdminDashboard />; }
+export default function AdminPage() { const { data: session, status } = useSession()
+
+if (status === 'loading') return <p>Cargando...</p>
+
+if (!session || session.user.role !== 'admin') { redirect('/login') }
+
+return <AdminDashboard /> }
 
