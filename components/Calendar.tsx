@@ -7,7 +7,7 @@ export default function Calendar() {
 
   const addEvent = () => {
     if (input.trim()) {
-      setEvents([...events, input.trim()]);
+      setEvents([...events, input]);
       setInput('');
     }
   };
@@ -18,16 +18,16 @@ export default function Calendar() {
       <div className="flex gap-2 mb-4">
         <input
           type="text"
-          className="border p-2 flex-1 rounded"
+          className="border p-2 flex-1"
           placeholder="Nueva fecha o evento"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={addEvent} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <button onClick={addEvent} className="bg-blue-600 text-white px-4 py-2 rounded">
           Añadir
         </button>
       </div>
-      <ul className="list-disc pl-6 space-y-1">
+      <ul className="list-disc pl-6">
         {events.map((ev, idx) => (
           <li key={idx}>{ev}</li>
         ))}
