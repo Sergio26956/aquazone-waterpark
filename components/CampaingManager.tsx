@@ -1,44 +1,56 @@
 'use client';
 import { useState } from 'react';
 
+interface Campaign {
+  id: number;
+  title: string;
+  description: string;
+}
+
 export default function CampaignManager() {
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
-  const [status, setStatus] = useState('');
+  const [campaigns, setCampaigns] = useState<Campaign[]>([
+    { id: 1, title: 'Verano 2025', description: 'Campaña para temporada alta verano 2025' },
+  ]);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
-  const sendCampaign = async () => {
-    const res = await fetch('/api/mail', {
-      method: 'POST',
-      body: JSON.stringify({ subject, message }),
-    });
-
-    if (res.ok) {
-      setStatus('✅ Enviado correctamente');
-    } else {
-      setStatus('❌ Error al enviar');
+  const addCampaign = () => {
+    if (title.trim() && description.trim()) {
+      setCampaigns([...campaigns, { id: Date.now(), title: title.trim(), description: description.trim() }]);
+      setTitle('');
+      setDescription('');
     }
   };
 
   return (
     <div>
-      <h3 className="text-xl font-bold mb-4">Campaña de Mailing</h3>
-      <input
-        className="w-full p-2 border rounded mb-2"
-        placeholder="Asunto"
-        value={subject}
-        onChange={(e) => setSubject(e.target.value)}
-      />
-      <textarea
-        className="w-full p-2 border rounded mb-2"
-        rows={6}
-        placeholder="Mensaje de la campaña"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <button onClick={sendCampaign} className="bg-green-600 text-white px-4 py-2 rounded">
-        Enviar Campaña
-      </button>
-      {status && <p className="mt-2">{status}</p>}
+      <h3 className="text-xl font-bold mb-4">Gestor de Campañas</h3>
+      <div className="mb-4 flex flex-col gap-2 max-w-md">
+        <input
+          type="text"
+          placeholder="Título"
+          className="border p-2 rounded"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea
+          placeholder="Descripción"
+          className="border p-2 rounded"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <button onClick={addCampaign} className="bg-green-600 text-white py-2 rounded hover:bg-green-700">
+          Añadir Campaña
+        </button>
+      </div>
+
+      <ul className="list-disc pl-6 space-y-2">
+        {campaigns.map(({ id, title, description }) => (
+          <li key={id}>
+            <strong>{title}</strong>: {description}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
