@@ -1,15 +1,6 @@
-'use client';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import AdminPanel from '@/components/AdminPanel';
+import AdminDashboard from '@/components/AdminDashboard'; import { getServerSession } from 'next-auth'; import { redirect } from 'next/navigation';
 
-export default function AdminPage() {
-  const router = useRouter();
+export default async function AdminPage() { const session = await getServerSession(); if (!session) redirect('/login');
 
-  useEffect(() => {
-    const isAuth = localStorage.getItem('admin_auth');
-    if (!isAuth) router.push('/admin-login');
-  }, [router]);
+return <AdminDashboard />; }
 
-  return <AdminPanel />;
-}
