@@ -12,8 +12,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { prompt } = req.body;
-    if (!prompt) {
-      return res.status(400).json({ message: 'Falta el prompt' });
+
+    if (typeof prompt !== 'string' || prompt.trim().length < 10) {
+      return res.status(400).json({ message: 'El prompt debe tener al menos 10 caracteres.' });
     }
 
     const response = await openai.chat.completions.create({
@@ -25,6 +26,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     const videoUrl = response.choices[0]?.message?.content || '';
+
+    if (!videoUrl) {
+      return res.status(500).json({ message: 'No se pudo generar el video.' });
+    }
 
     return res.status(200).json({ videoUrl });
   } catch (error) {
