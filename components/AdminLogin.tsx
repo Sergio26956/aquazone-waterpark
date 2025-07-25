@@ -9,6 +9,7 @@ export default function AdminLogin() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+      localStorage.setItem('isAdmin', 'true');
       router.push('/admin');
     } else {
       alert('Contraseña incorrecta');
