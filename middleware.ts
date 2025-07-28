@@ -1,12 +1,17 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get('auth-token')?.value;
+  const isLoggedIn = request.cookies.get("aquazone_auth")?.value === "true";
 
-  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  const adminRoutes = ["/admin/dashboard", "/admin/usuarios", "/admin/calendario"];
+
+  if (adminRoutes.includes(request.nextUrl.pathname) && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/admin/login", request.url));
   }
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/admin/:path*"],
+};
