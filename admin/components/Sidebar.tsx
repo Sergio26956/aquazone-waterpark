@@ -3,48 +3,57 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Images, CalendarDays, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  Calendar,
+  FolderKanban,
+  Image as ImageIcon,
+  LogOut,
+} from "lucide-react";
 
 const navItems = [
-  { name: "Panel", href: "/admin", icon: LayoutDashboard },
-  { name: "Galería", href: "/admin/galeria", icon: Images },
-  { name: "Eventos", href: "/admin/eventos", icon: CalendarDays },
+  { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { name: "Calendario", href: "/admin/calendario", icon: Calendar },
+  { name: "Contrataciones", href: "/admin/contrataciones", icon: FolderKanban },
+  { name: "Galería", href: "/admin/galeria", icon: ImageIcon },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-zinc-950 border-r border-zinc-800">
-      <div className="text-center py-6 border-b border-zinc-800">
-        <h1 className="text-xl font-bold tracking-wider text-cyan-400">AQUAZONE</h1>
-        <p className="text-xs text-zinc-500">Zona Administrativa</p>
+    <aside className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col">
+      <div className="p-6 font-bold text-2xl tracking-tight text-white text-center">
+        AQUAZONE 2030
       </div>
-
-      <nav className="p-4 flex flex-col gap-2">
-        {navItems.map(({ name, href, icon: Icon }) => {
-          const isActive = pathname === href;
+      <nav className="flex-1 px-4 space-y-2">
+        {navItems.map((item) => {
+          const isActive = pathname === item.href;
           return (
             <Link
-              key={href}
-              href={href}
+              key={item.name}
+              href={item.href}
               className={cn(
-                "flex items-center gap-3 px-4 py-2 rounded-md text-sm font-medium transition-all",
-                isActive
-                  ? "bg-cyan-500 text-white"
-                  : "text-zinc-300 hover:bg-zinc-800"
+                "flex items-center gap-3 p-3 rounded-lg transition-all duration-200 hover:bg-zinc-800",
+                {
+                  "bg-zinc-800 text-cyan-400 font-semibold shadow-md":
+                    isActive,
+                  "text-zinc-300": !isActive,
+                }
               )}
             >
-              <Icon size={18} />
-              {name}
+              <item.icon className="w-5 h-5" />
+              <span>{item.name}</span>
             </Link>
           );
         })}
       </nav>
-
-      <div className="mt-auto p-4">
-        <button className="flex items-center gap-2 text-sm text-zinc-400 hover:text-red-400 transition">
-          <LogOut size={18} />
+      <div className="px-4 py-6">
+        <button
+          onClick={() => alert("Cerrar sesión (pendiente implementación)")}
+          className="flex items-center gap-3 w-full p-3 text-left text-sm bg-zinc-800 hover:bg-zinc-700 rounded-lg text-red-400"
+        >
+          <LogOut className="w-5 h-5" />
           Cerrar sesión
         </button>
       </div>
