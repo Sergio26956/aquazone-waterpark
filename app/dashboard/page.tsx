@@ -1,5 +1,3 @@
-// app/dashboard/page.tsx
-
 import { Card, CardContent } from "@/components/ui/card"; import { Calendar } from "@/components/ui/calendar"; import { eventos } from "@/data/eventos"; import { format } from "date-fns";
 
 export default function DashboardPage() { return ( <div className="p-4"> <h1 className="text-2xl font-bold mb-4">Panel de Administración</h1>
