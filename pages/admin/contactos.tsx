@@ -13,15 +13,15 @@ const contactosDemo: Contacto[] = [
     id: 1,
     nombre: 'Juan Pérez',
     email: 'juan@example.com',
-    mensaje: 'Consulta sobre parque flotante.',
-    fecha: '2025-07-28',
+    mensaje: 'Solicito información sobre parques flotantes.',
+    fecha: '2025-07-20',
   },
   {
     id: 2,
     nombre: 'María López',
     email: 'maria@example.com',
-    mensaje: 'Interesada en el parque urbano.',
-    fecha: '2025-07-27',
+    mensaje: '¿Tienen disponibilidad para eventos en agosto?',
+    fecha: '2025-07-21',
   },
 ];
 
@@ -37,12 +37,12 @@ const Contactos = () => {
       <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Lista de Contactos</h1>
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
-          <tr style={{ backgroundColor: '#007acc', color: '#fff' }}>
+          <tr style={{ backgroundColor: '#264653', color: '#fff' }}>
             <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Nombre</th>
             <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Email</th>
             <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Mensaje</th>
             <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Fecha</th>
-            <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Acción</th>
+            <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -56,7 +56,7 @@ const Contactos = () => {
                 <button
                   onClick={() => eliminarContacto(c.id)}
                   style={{
-                    backgroundColor: '#e63946',
+                    backgroundColor: '#e76f51',
                     color: 'white',
                     border: 'none',
                     padding: '0.25rem 0.5rem',
