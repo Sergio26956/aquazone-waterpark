@@ -1,72 +1,62 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { Calendar, momentLocalizer, Event } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import "moment/locale/es";
+import { useState } from 'react';
 
-moment.locale("es");
-const localizer = momentLocalizer(moment);
+const diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
-type Evento = {
-  title: string;
-  start: Date;
-  end: Date;
+const generarDiasDelMes = (año: number, mes: number) => {
+  const fechaInicio = new Date(año, mes, 1);
+  const fechaFin = new Date(año, mes + 1, 0);
+  const dias = [];
+
+  for (let i = 1; i <= fechaFin.getDate(); i++) {
+    dias.push(i);
+  }
+
+  return dias;
 };
 
-export default function Calendario() {
-  const router = useRouter();
-  const [eventos, setEventos] = useState<Evento[]>([]);
+const Calendario = () => {
+  const hoy = new Date();
+  const [mesActual, setMesActual] = useState(hoy.getMonth());
+  const [añoActual, setAñoActual] = useState(hoy.getFullYear());
 
-  useEffect(() => {
-    const auth = localStorage.getItem("aquazone_auth");
-    if (auth !== "true") router.push("/admin/login");
-
-    const stored = localStorage.getItem("aquazone_eventos");
-    if (stored) setEventos(JSON.parse(stored));
-  }, []);
-
-  const agregarEvento = ({ start, end }: { start: Date; end: Date }) => {
-    const titulo = prompt("Título del evento:");
-    if (titulo) {
-      const nuevoEvento = { title: titulo, start, end };
-      const actualizados = [...eventos, nuevoEvento];
-      setEventos(actualizados);
-      localStorage.setItem("aquazone_eventos", JSON.stringify(actualizados));
-    }
+  const avanzarMes = () => {
+    const nuevoMes = mesActual === 11 ? 0 : mesActual + 1;
+    const nuevoAño = mesActual === 11 ? añoActual + 1 : añoActual;
+    setMesActual(nuevoMes);
+    setAñoActual(nuevoAño);
   };
 
+  const retrocederMes = () => {
+    const nuevoMes = mesActual === 0 ? 11 : mesActual - 1;
+    const nuevoAño = mesActual === 0 ? añoActual - 1 : añoActual;
+    setMesActual(nuevoMes);
+    setAñoActual(nuevoAño);
+  };
+
+  const dias = generarDiasDelMes(añoActual, mesActual);
+  const nombreMes = new Date(añoActual, mesActual).toLocaleString('es-ES', { month: 'long' });
+
   return (
-    <div className="min-h-screen p-8 bg-gradient-to-b from-white to-blue-100">
-      <h1 className="text-3xl font-bold mb-4 text-blue-900 text-center">
-        Calendario de Contrataciones AQUAZONE
-      </h1>
-      <div className="bg-white p-4 rounded-2xl shadow-xl">
-        <Calendar
-          localizer={localizer}
-          events={eventos}
-          startAccessor="start"
-          endAccessor="end"
-          selectable
-          onSelectSlot={agregarEvento}
-          style={{ height: "80vh" }}
-          messages={{
-            next: "Sig.",
-            previous: "Ant.",
-            today: "Hoy",
-            month: "Mes",
-            week: "Semana",
-            day: "Día",
-            agenda: "Agenda",
-            date: "Fecha",
-            time: "Hora",
-            event: "Evento",
-            noEventsInRange: "No hay eventos",
-            showMore: (total) => `+ Ver ${total} más`,
-          }}
-        />
+    <div style={{ padding: '2rem' }}>
+      <h1 style={{ fontSize: '2rem' }}>Calendario</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <button onClick={retrocederMes}>← Mes anterior</button>
+        <span>{nombreMes.toUpperCase()} {añoActual}</span>
+        <button onClick={avanzarMes}>Mes siguiente →</button>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '0.5rem' }}>
+        {diasSemana.map((dia, index) => (
+          <div key={index} style={{ fontWeight: 'bold', textAlign: 'center' }}>{dia}</div>
+        ))}
+        {dias.map((dia, index) => (
+          <div key={index} style={{ padding: '1rem', border: '1px solid #ccc', textAlign: 'center' }}>
+            {dia}
+          </div>
+        ))}
       </div>
     </div>
   );
-}
+};
+
+export default Calendario;
