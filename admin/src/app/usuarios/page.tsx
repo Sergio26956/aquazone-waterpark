@@ -1,67 +1,75 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+import { useEffect, useState } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { motion } from 'framer-motion';
 
 interface Usuario {
   id: number;
   nombre: string;
-  rol: string;
-  email: string;
+  correo: string;
+  tipo: string;
+  estado: 'Pendiente' | 'Confirmado' | 'Cancelado';
 }
 
 export default function UsuariosPage() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/usuarios")
-      .then((res) => res.json())
-      .then((data) => {
-        setUsuarios(data);
-        setLoading(false);
-      });
+    const fetchUsuarios = async () => {
+      const res = await fetch('/api/usuarios');
+      const data = await res.json();
+      setUsuarios(data);
+    };
+    fetchUsuarios();
   }, []);
 
   return (
-    <div className="min-h-screen p-6 md:p-10 bg-gradient-to-bl from-slate-950 to-blue-900 text-white">
-      <motion.h1
-        className="text-3xl md:text-5xl font-bold mb-8"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        Usuarios Administrativos
-      </motion.h1>
-
-      {loading ? (
-        <div className="flex items-center justify-center h-60">
-          <Loader2 className="w-10 h-10 text-blue-200 animate-spin" />
-        </div>
-      ) : usuarios.length === 0 ? (
-        <p className="text-center text-blue-300 text-xl">No hay usuarios registrados.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {usuarios.map((usuario) => (
-            <motion.div
-              key={usuario.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: usuario.id * 0.02 }}
-            >
-              <Card className="bg-slate-800 border border-blue-400/30 rounded-2xl shadow-xl">
-                <CardContent className="p-6 text-white">
-                  <p><strong>Nombre:</strong> {usuario.nombre}</p>
-                  <p><strong>Email:</strong> {usuario.email}</p>
-                  <p><strong>Rol:</strong> {usuario.rol}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      )}
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="p-6"
+    >
+      <Card className="w-full bg-white/90 border border-blue-200 shadow-xl rounded-2xl backdrop-blur-sm">
+        <CardHeader>
+          <CardTitle className="text-blue-800 text-2xl">👥 Usuarios Registrados</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nombre</TableHead>
+                  <TableHead>Correo</TableHead>
+                  <TableHead>Tipo de Evento</TableHead>
+                  <TableHead>Estado</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {usuarios.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell>{user.nombre}</TableCell>
+                    <TableCell>{user.correo}</TableCell>
+                    <TableCell>{user.tipo}</TableCell>
+                    <TableCell>
+                      <span
+                        className={`px-2 py-1 rounded-full text-sm font-medium
+                          ${user.estado === 'Confirmado' ? 'bg-green-100 text-green-700' :
+                          user.estado === 'Pendiente' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-red-100 text-red-700'}`}
+                      >
+                        {user.estado}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
