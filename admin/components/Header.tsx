@@ -1,28 +1,41 @@
 "use client";
 
-import { Bell, UserCircle2 } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+import { motion } from "framer-motion";
 
 export default function Header() {
-  const { data: session } = useSession();
+  const pathname = usePathname();
+
+  const titleMap: { [key: string]: string } = {
+    "/admin": "Panel de Control",
+    "/admin/galeria": "Gestión de Galería",
+    "/admin/eventos": "Gestión de Eventos",
+  };
+
+  const currentTitle = titleMap[pathname] || "Zona Administrativa";
+  const currentDate = format(new Date(), "EEEE dd 'de' MMMM yyyy", { locale: es });
 
   return (
-    <header className="w-full px-6 py-4 flex items-center justify-between bg-zinc-950 shadow-md border-b border-zinc-800">
-      <h1 className="text-xl font-semibold text-white tracking-wide">Zona Administrativa</h1>
+    <header className="w-full h-20 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between px-6">
+      <motion.div
+        initial={{ x: -10, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        className="text-white"
+      >
+        <h2 className="text-xl font-semibold">{currentTitle}</h2>
+        <p className="text-sm text-zinc-400">{currentDate}</p>
+      </motion.div>
 
-      <div className="flex items-center gap-5">
-        <button className="relative">
-          <Bell className="w-6 h-6 text-white" />
-          <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
-        </button>
-
-        <div className="flex items-center gap-2 text-white">
-          <UserCircle2 className="w-7 h-7" />
-          <div className="text-sm font-medium">
-            {session?.user?.name ?? "Admin"}
-          </div>
-        </div>
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="hidden md:block text-sm text-cyan-400 font-mono"
+      >
+        Modo Avanzado 2030 ⚙️
+      </motion.div>
     </header>
   );
 }
