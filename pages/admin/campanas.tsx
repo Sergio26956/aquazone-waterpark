@@ -6,22 +6,25 @@ interface Campana {
   descripcion: string;
   fechaInicio: string;
   fechaFin: string;
+  activo: boolean;
 }
 
 const campanasDemo: Campana[] = [
   {
     id: 1,
-    nombre: 'Campaña Verano 2025',
-    descripcion: 'Promoción especial para parques flotantes en verano.',
+    nombre: 'Verano 2025',
+    descripcion: 'Campaña especial para temporada de verano',
     fechaInicio: '2025-06-01',
     fechaFin: '2025-08-31',
+    activo: true,
   },
   {
     id: 2,
-    nombre: 'Campaña Urbana',
-    descripcion: 'Descuentos para parques urbanos en zonas metropolitanas.',
-    fechaInicio: '2025-07-15',
-    fechaFin: '2025-09-15',
+    nombre: 'Oferta Invierno',
+    descripcion: 'Descuentos especiales para invierno',
+    fechaInicio: '2025-12-01',
+    fechaFin: '2026-01-31',
+    activo: false,
   },
 ];
 
@@ -31,28 +34,37 @@ const Campanas = () => {
   const [descripcion, setDescripcion] = useState('');
   const [fechaInicio, setFechaInicio] = useState('');
   const [fechaFin, setFechaFin] = useState('');
+  const [activo, setActivo] = useState(true);
 
   const agregarCampana = () => {
     if (!nombre || !descripcion || !fechaInicio || !fechaFin) {
-      alert('Rellena todos los campos');
+      alert('Completa todos los campos');
       return;
     }
-    const nueva = {
+    const nueva: Campana = {
       id: campanas.length + 1,
       nombre,
       descripcion,
       fechaInicio,
       fechaFin,
+      activo,
     };
     setCampanas([...campanas, nueva]);
     setNombre('');
     setDescripcion('');
     setFechaInicio('');
     setFechaFin('');
+    setActivo(true);
   };
 
   const eliminarCampana = (id: number) => {
     setCampanas(campanas.filter(c => c.id !== id));
+  };
+
+  const toggleActivo = (id: number) => {
+    setCampanas(
+      campanas.map(c => (c.id === id ? { ...c, activo: !c.activo } : c))
+    );
   };
 
   return (
@@ -62,7 +74,7 @@ const Campanas = () => {
       <div style={{ marginBottom: '1rem' }}>
         <input
           type="text"
-          placeholder="Nombre de campaña"
+          placeholder="Nombre"
           value={nombre}
           onChange={e => setNombre(e.target.value)}
           style={{ marginRight: '0.5rem', padding: '0.5rem', width: '20%' }}
@@ -86,6 +98,15 @@ const Campanas = () => {
           onChange={e => setFechaFin(e.target.value)}
           style={{ marginRight: '0.5rem', padding: '0.5rem' }}
         />
+        <label style={{ marginRight: '0.5rem' }}>
+          Activo:
+          <input
+            type="checkbox"
+            checked={activo}
+            onChange={e => setActivo(e.target.checked)}
+            style={{ marginLeft: '0.25rem' }}
+          />
+        </label>
         <button
           onClick={agregarCampana}
           style={{
@@ -108,7 +129,8 @@ const Campanas = () => {
             <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Descripción</th>
             <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Fecha Inicio</th>
             <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Fecha Fin</th>
-            <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Acción</th>
+            <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Activo</th>
+            <th style={{ padding: '0.5rem', border: '1px solid #ccc' }}>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -118,6 +140,13 @@ const Campanas = () => {
               <td style={{ padding: '0.5rem', border: '1px solid #ccc' }}>{c.descripcion}</td>
               <td style={{ padding: '0.5rem', border: '1px solid #ccc' }}>{c.fechaInicio}</td>
               <td style={{ padding: '0.5rem', border: '1px solid #ccc' }}>{c.fechaFin}</td>
+              <td style={{ padding: '0.5rem', border: '1px solid #ccc', textAlign: 'center' }}>
+                <input
+                  type="checkbox"
+                  checked={c.activo}
+                  onChange={() => toggleActivo(c.id)}
+                />
+              </td>
               <td style={{ padding: '0.5rem', border: '1px solid #ccc', textAlign: 'center' }}>
                 <button
                   onClick={() => eliminarCampana(c.id)}
@@ -137,8 +166,8 @@ const Campanas = () => {
           ))}
           {campanas.length === 0 && (
             <tr>
-              <td colSpan={5} style={{ padding: '1rem', textAlign: 'center' }}>
-                No hay campañas activas.
+              <td colSpan={6} style={{ padding: '1rem', textAlign: 'center' }}>
+                No hay campañas registradas.
               </td>
             </tr>
           )}
