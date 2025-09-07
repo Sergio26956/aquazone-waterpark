@@ -1,29 +1,27 @@
 "use client";
 
-import { Menu, UserCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { Bell, UserCircle2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
-    <header className="w-full h-16 flex items-center justify-between px-6 bg-zinc-900 border-b border-zinc-800 shadow-lg relative z-10">
-      <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          className="p-2 hover:bg-zinc-800"
-          onClick={() => setOpen(!open)}
-        >
-          <Menu className="w-6 h-6 text-zinc-400" />
-        </Button>
-        <h1 className="text-xl font-semibold tracking-tight text-white">
-          Panel Administrativo
-        </h1>
-      </div>
-      <div className="flex items-center gap-4">
-        <span className="text-sm text-zinc-400">Administrador</span>
-        <UserCircle className="w-7 h-7 text-cyan-400" />
+    <header className="w-full px-6 py-4 flex items-center justify-between bg-zinc-950 shadow-md border-b border-zinc-800">
+      <h1 className="text-xl font-semibold text-white tracking-wide">Zona Administrativa</h1>
+
+      <div className="flex items-center gap-5">
+        <button className="relative">
+          <Bell className="w-6 h-6 text-white" />
+          <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
+        </button>
+
+        <div className="flex items-center gap-2 text-white">
+          <UserCircle2 className="w-7 h-7" />
+          <div className="text-sm font-medium">
+            {session?.user?.name ?? "Admin"}
+          </div>
+        </div>
       </div>
     </header>
   );
