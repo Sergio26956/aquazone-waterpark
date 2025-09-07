@@ -3,40 +3,50 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Image, CalendarCheck, LogOut } from "lucide-react";
+import { LayoutDashboard, Images, CalendarDays, LogOut } from "lucide-react";
+
+const navItems = [
+  { name: "Panel", href: "/admin", icon: LayoutDashboard },
+  { name: "Galería", href: "/admin/galeria", icon: Images },
+  { name: "Eventos", href: "/admin/eventos", icon: CalendarDays },
+];
 
 export default function Sidebar() {
   const pathname = usePathname();
 
-  const links = [
-    { href: "/admin", label: "Panel", icon: LayoutDashboard },
-    { href: "/admin/galeria", label: "Galería", icon: Image },
-    { href: "/admin/calendario", label: "Calendario", icon: CalendarCheck },
-  ];
-
   return (
-    <aside className="h-full w-64 bg-zinc-900 text-white flex flex-col shadow-2xl">
-      <div className="p-6 text-2xl font-bold text-center border-b border-zinc-700">
-        ADMIN 2030
+    <aside className="w-64 bg-zinc-950 border-r border-zinc-800">
+      <div className="text-center py-6 border-b border-zinc-800">
+        <h1 className="text-xl font-bold tracking-wider text-cyan-400">AQUAZONE</h1>
+        <p className="text-xs text-zinc-500">Zona Administrativa</p>
       </div>
-      <nav className="flex-1 p-4 space-y-2">
-        {links.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            className={cn(
-              "flex items-center gap-3 p-3 rounded-lg transition hover:bg-zinc-700",
-              pathname === href && "bg-zinc-800"
-            )}
-          >
-            <Icon className="w-5 h-5" />
-            <span>{label}</span>
-          </Link>
-        ))}
+
+      <nav className="p-4 flex flex-col gap-2">
+        {navItems.map(({ name, href, icon: Icon }) => {
+          const isActive = pathname === href;
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={cn(
+                "flex items-center gap-3 px-4 py-2 rounded-md text-sm font-medium transition-all",
+                isActive
+                  ? "bg-cyan-500 text-white"
+                  : "text-zinc-300 hover:bg-zinc-800"
+              )}
+            >
+              <Icon size={18} />
+              {name}
+            </Link>
+          );
+        })}
       </nav>
-      <div className="p-4 border-t border-zinc-700 text-sm text-center opacity-50">
-        <LogOut className="inline w-4 h-4 mr-1" />
-        Cerrar sesión
+
+      <div className="mt-auto p-4">
+        <button className="flex items-center gap-2 text-sm text-zinc-400 hover:text-red-400 transition">
+          <LogOut size={18} />
+          Cerrar sesión
+        </button>
       </div>
     </aside>
   );
