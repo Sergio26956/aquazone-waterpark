@@ -1,41 +1,30 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
-import { motion } from "framer-motion";
+import { Menu, UserCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 export default function Header() {
-  const pathname = usePathname();
-
-  const titleMap: { [key: string]: string } = {
-    "/admin": "Panel de Control",
-    "/admin/galeria": "Gestión de Galería",
-    "/admin/eventos": "Gestión de Eventos",
-  };
-
-  const currentTitle = titleMap[pathname] || "Zona Administrativa";
-  const currentDate = format(new Date(), "EEEE dd 'de' MMMM yyyy", { locale: es });
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="w-full h-20 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between px-6">
-      <motion.div
-        initial={{ x: -10, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        className="text-white"
-      >
-        <h2 className="text-xl font-semibold">{currentTitle}</h2>
-        <p className="text-sm text-zinc-400">{currentDate}</p>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="hidden md:block text-sm text-cyan-400 font-mono"
-      >
-        Modo Avanzado 2030 ⚙️
-      </motion.div>
+    <header className="w-full h-16 flex items-center justify-between px-6 bg-zinc-900 border-b border-zinc-800 shadow-lg relative z-10">
+      <div className="flex items-center gap-4">
+        <Button
+          variant="ghost"
+          className="p-2 hover:bg-zinc-800"
+          onClick={() => setOpen(!open)}
+        >
+          <Menu className="w-6 h-6 text-zinc-400" />
+        </Button>
+        <h1 className="text-xl font-semibold tracking-tight text-white">
+          Panel Administrativo
+        </h1>
+      </div>
+      <div className="flex items-center gap-4">
+        <span className="text-sm text-zinc-400">Administrador</span>
+        <UserCircle className="w-7 h-7 text-cyan-400" />
+      </div>
     </header>
   );
 }
