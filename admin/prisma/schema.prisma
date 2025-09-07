@@ -8,9 +8,9 @@ datasource db {
 }
 
 model Usuario {
-  id       Int      @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   nombre   String
-  correo   String   @unique
+  correo   String @unique
   tipo     String
   estado   String
   creadoEn DateTime @default(now())
